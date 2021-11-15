@@ -1,0 +1,33 @@
+<f:layout name="Page" />
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+   xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+
+<f:section name="Content">
+
+  <f:format.raw>{content}</f:format.raw>
+
+  <section class="content">
+    <div class="headlineContainer">
+      <div class="rootline">
+        <ol>
+          <f:cObject typoscriptObjectPath="lib.breadcrumb" />
+        </ol>
+        <div class="clearfix"></div>
+      </div>
+      <h2>{data.title}</h2>
+    </div>
+    <div class="contentContainer">
+      <div class="primaryColumn">
+          <f:cObject typoscriptObjectPath="lib.dynamicContent" data="1" />
+      </div>
+      <div class="secondaryColumn">
+          <f:cObject typoscriptObjectPath="lib.dynamicContent" data="2" />
+      </div>
+      <div class="clearfix"></div>
+      <div class="ColumnSeparator"></div>
+    </div>
+  </section>
+
+</f:section>
+
+</div>

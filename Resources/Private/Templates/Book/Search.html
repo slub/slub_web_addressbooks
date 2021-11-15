@@ -1,0 +1,94 @@
+<f:layout name="Default" />
+
+This Template is responsible for displaying a search form view for a domain object
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        Search.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+<div class="searchResults">
+
+<f:render partial="Book/Search" arguments="{yearFirst: yearFirst, yearCurrent: yearCurrent, yearPrevious: yearPrevious, yearNext: yearNext, yearLast: yearLast, place : place, SearchString : searchName, bookPersons: bookPersons, bookStreets: bookStreets, pageHovLink: pageHovLink, pageBehoerdenverzeichnis: pageBehoerdenverzeichnis, PageBerufsklassenUndGewerbe: PageBerufsklassenUndGewerbe, PageHandelsregister: PageHandelsregister, PageGenossenschaftsregister: PageGenossenschaftsregister}" />
+
+
+<div class="listPersons">
+<h3><f:translate key="tx_slubwebaddressbooks_domain_model_person.name"></f:translate></h3>
+
+<f:if condition="{closestSearchPersons}">
+<f:then>
+	<p>
+	<f:format.printf arguments="{0: '<b>{searchName}</b>'}">
+		<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_you_searched_for_closest' />
+	</f:format.printf>
+	<f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{closestSearchPersons.image}" target="_blank">{closestSearchPersons.name} </f:link.external>
+	</p>
+</f:then>
+<f:else>
+		<p>	<f:format.printf arguments="{0: '{bookPersons.yearString}'}">
+				<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_there_is_no_name_directory' />
+			</f:format.printf>
+			<ul class="yearnav">
+			<f:if condition="{yearPrevious}=={yearCurrent}">
+				<f:then><li class="yearleft"><span>{yearPrevious}</span></li></f:then>
+				<f:else><li class="yearleft"><f:link.action action="search" controller="Book"  arguments="{year : yearPrevious, placeId : place.uid, SearchString : searchName}">{yearPrevious}</f:link.action></li></f:else>
+			</f:if>
+
+			<f:if condition="{yearNext}=={yearCurrent}">
+				<f:then><li class="yearright"><span>{yearNext}</span></li></f:then>
+				<f:else><li class="yearright"><f:link.action action="search" controller="Book"  arguments="{year : yearNext, placeId : place.uid, SearchString : searchName}">{yearNext}</f:link.action></li></f:else>
+			</f:if>
+			</ul>
+		</p>
+</f:else>
+</f:if>
+
+</div>
+
+
+<div class="listStreets">
+<h3><f:translate key="tx_slubwebaddressbooks_domain_model_street.name"></f:translate></h3>
+
+<f:if condition="{closestSearchStreets}">
+<f:then>
+	<p>
+	<f:format.printf arguments="{0: '<b>{searchName}</b>'}">
+		<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_you_searched_for_closest' />
+	</f:format.printf>
+	<f:link.external uri="http://digital.slub-dresden.de/id{bookStreets.ppn}/{closestSearchStreets.image}" target="_blank">{closestSearchStreets.name} </f:link.external>
+	</p>
+</f:then>
+<f:else>
+	<p>
+		<f:format.printf arguments="{0: '{bookStreets.yearString}'}">
+			<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_there_is_no_street_directory' />
+		</f:format.printf>
+
+	<ul class="yearnav">
+	<f:if condition="{yearPrevious}=={yearCurrent}">
+		<f:then><li class="yearleft"><span>{yearPrevious}</span></li></f:then>
+		<f:else><li class="yearleft"><f:link.action action="search" controller="Book"  arguments="{year : yearPrevious, placeId : place.uid, SearchString : searchName}">{yearPrevious}</f:link.action></li></f:else>
+	</f:if>
+
+	<f:if condition="{yearNext}=={yearCurrent}">
+		<f:then><li class="yearright"><span>{yearNext}</span></li></f:then>
+		<f:else><li class="yearright"><f:link.action action="search" controller="Book"  arguments="{year : yearNext, placeId : place.uid, SearchString : searchName}">{yearNext}</f:link.action></li></f:else>
+	</f:if>
+	</ul>
+	</p>
+</f:else>
+</f:if>
+
+</div>
+
+<div class="clearfix"></div>
+
+</div>
+
+</f:section>

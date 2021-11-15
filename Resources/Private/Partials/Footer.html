@@ -1,0 +1,23 @@
+{namespace si=Slub\SlubWebAddressbooks\ViewHelpers}
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en" xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+
+<f:section name="Footer">
+  <footer>
+    <div class="footerContainer">
+      <ul class="partners">
+        <li>
+          <f:link.page pageUid="{rootPageId}" title="<si:pageInfo uid='{homePageId}' field='title' />"><si:pageInfo uid='{homePageId}' field='title' /></f:link.page>
+        </li>
+        <li>
+          <f:link.page pageUid="{imprintPageId}" title="<si:pageInfo uid='{imprintPageId}' field='title' />"><si:pageInfo uid='{imprintPageId}' field='title' /></f:link.page>
+        </li>
+         <li>
+          <f:link.page pageUid="{privacyPageId}" title="<si:pageInfo uid='{privacyPageId}' field='title' />"><si:pageInfo uid='{privacyPageId}' field='title' /></f:link.page>
+        </li>
+      </ul>
+      <p class="copyright">&copy; SLUB Dresden <f:format.date date="now" format="Y"/></p>
+    </div>
+  </footer>
+</f:section>
+
+</div>

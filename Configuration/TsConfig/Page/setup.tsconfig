@@ -1,0 +1,133 @@
+mod.SHARED.colPos_list = 0,1,2
+TCEFORM.tt_content {
+	colPos.removeItems =
+	colPos.altLabels.0 = Suchleiste
+	colPos.altLabels.1 = Hauptinhalt
+	colPos.altLabels.2 = Seitenleiste
+	header_position.disabled = 1
+	header_link.disabled = 1
+	date.disabled = 1
+	bodytext.RTEfullScreenWidth = 100%
+
+	header_layout.disabled = 0
+	header_layout.altLabels.0 = Standard
+	header_layout.altLabels.1 = H1 Überschrift
+	header_layout.altLabels.2 = H2 Überschrift
+	header_layout.altLabels.3 = H3 Überschrift
+	header_layout.altLabels.4 = H4 Überschrift
+	header_layout.altLabels.5 = H5 Überschrift
+	header_layout.removeItems = 0,1,2,5
+
+}
+##id storagepage of gridlayout
+TCEFORM.pages.backend_layout.PAGE_TSCONFIG_ID=7285
+TCEFORM.pages.backend_layout_next_level.PAGE_TSCONFIG_ID=7285
+
+TCEMAIN.permissions {
+	# group: adressbuecher
+	groupid = 56
+	user = show,editcontent,edit,delete,new
+	group = show,editcontent,edit,delete,new
+	everybody = show
+}
+TCEFORM.pages.layout{
+	altLabels.0 = Standard (2 Spalten)
+	altLabels.1 = Startseiten und Tour Grid
+	altLabels.2 = Inhaltsseiten Grid
+	removeItems = 3
+}
+
+RTE.classes >
+RTE.classes {
+	important.name = Wichtig
+	extrabox.name = Extrabox
+	contact.name = Kontaktbox
+}
+RTE.classesAnchor >
+RTE.classesAnchor {
+	external.class = external
+	external.type = url
+}
+RTE.colors >
+RTE.fonts >
+RTE.default {
+	FE >
+	buttons.blockstyle.tags.div.allowedClasses = abstract,indent,small,newsauthor
+	buttons.textstyle.tags.span.allowedClasses = red,quote
+	buttons.image.properties.class.allowedClasses =
+	buttons.blockstyle.tags.table.allowedClasses =
+	buttons.blockstyle.tags.td.allowedClasses =
+	buttons.link.properties.class.allowedClasses = external
+	classesAnchor.default {
+		page =
+		url = external
+		file =
+		mail =
+	}
+	colors =
+	buttons.image {
+		options.removeItems = plain,dragdrop,upload
+		options.magic.maxWidth = 500
+		options.magic.maxHeight = 2000
+#		options.plain.maxWidth = 500
+#		options.plain.maxHeight = 2000
+		title.useDAMColumn = caption
+	}
+	buttons.link.properties.target.default =
+	buttons.link {
+#		options.removeItems = page,file,url,mail,spec
+#		targetSelector.disabled = 1
+		popupSelector.disabled = 1
+	}
+	disableColorPicker = 1
+	disableSelectColor = 1
+	buttons.fontstyle.removeItems = *
+	buttons.fontsize.removeItems = *
+	buttons.formatblock.removeItems = h1,h2,h5,h6,pre,address,div
+	showButtons = *
+	hideButtons = fontstyle,fontsize,underline,strikethrough,lefttoright,righttoleft,left,center,right,justifyfull,textcolor,bgcolor,textindicator,emoticon,user,inserttag,showhelp,about,rowproperties,rowsplit,columnsplit,cellsplit
+	toolbarOrder = bar,undo,redo,bar,cut,copy,paste,bar,link,image,line,bar,findreplace,spellcheck,bar,insertcharacter,abbreviation,bar,outdent,indent,subscript,superscript,bar,chMode,linebreak,bar,blockstylelabel,formatblock,blockstyle,bar,textstylelabel,textstyle,bar,removeformat,linebreak,bold,italic,bar,unorderedlist,orderedlist,bar,table,bar,tableproperties,space,rowinsertabove,rowinsertunder,rowdelete,space,columninsertbefore,columninsertafter,columndelete,space,cellproperties,cellinsertbefore,cellinsertafter,celldelete,cellmerge,bar
+	showStatusBar = 1
+	contentCSS = fileadmin/stylesheets/adressbuecher/rte.css
+	inlineStyle >
+	enableWordClean = 1
+	removeComments = 1
+	removeTrailingBR = 1
+	removeTags = basefont,center,font,input,o:p,sdfield,strike,thead,tbody,tfoot,u
+	removeTagsAndContent = address,applet,iframe,object,script,select,style
+	disableAlignmentFieldsetInTableOperations = 1
+	disableSpacingFieldsetInTableOperations = 1
+	disableColorFieldsetInTableOperations = 1
+	disableLayoutFieldsetInTableOperations = 1
+	disableBordersFieldsetInTableOperations = 1
+	proc.overruleMode = ts_css
+	FE.proc.overruleMode = ts_css
+	proc.allowTagsOutside = a,div,hr,img
+	proc.entryHTMLparser_db.tags >
+	proc.entryHTMLparser_db.tags {
+		a.allowedAttribs = class,href,id,name,rel,target,title
+		abbr.allowedAttribs = lang,title
+		abbreviation.allowedAttribs = lang,title
+		blockquote.allowedAttribs = cite,lang
+		br.allowedAttribs = class
+		div.allowedAttribs = class
+		form.allowedAttribs = action,class,id,method
+		hr.allowedAttribs = 0
+		img.allowedAttribs = alt,class,height,src,style,title,width,data-htmlarea-file-uid
+		p.allowedAttribs = class
+		span.allowedAttribs = class,lang,title
+	}
+	proc.entryHTMLparser_db.removeTags < RTE.default.removeTags
+	proc.HTMLparser_db.noAttrib = br,hr
+	proc.exitHTMLparser_db.tags.abbr.remap = abbreviation
+	proc.exitHTMLparser_db.tags.b.remap = strong
+	proc.allowedClasses = important,contact,extrabox
+
+}
+RTE.config {
+	tt_content.bodytext {
+		proc.overruleMode = ts_css
+		types.text.proc.overruleMode = ts_css
+		types.textpic >
+	}
+}

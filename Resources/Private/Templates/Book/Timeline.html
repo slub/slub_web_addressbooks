@@ -1,0 +1,55 @@
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+<div id="scrollwrap">
+  <div id="scroll">
+		<ul class="timeline">
+			<f:for each="{books}" as="book">
+				<f:if condition="{book.uid}">
+					<f:then>
+						<f:if condition="{book.year} % 10">
+							<f:then>
+								<li><f:link.action action="list" controller="Book" pageUid="{settings.pidSearchPersons}" arguments="{year : book.year, placeId : book.placeId}"><span class="year">{book.yearString}</span></f:link.action></li>
+							</f:then>
+							<f:else>
+								<li class="decade"><span class="decadeIndicator">{book.year}</span><f:link.action action="list" controller="Book" pageUid="{settings.pidSearchPersons}" arguments="{year : book.year, placeId : book.placeId}"><span class="year">{book.yearString}</span></f:link.action></li>
+							</f:else>
+						</f:if>
+					</f:then>
+					<f:else>
+						<f:if condition="{book.year} % 10">
+							<f:then>
+								<li><span class="year">{book.yearString}</span></li>
+							</f:then>
+							<f:else>
+								<li class="decade"><span class="decadeIndicator">{book.year}</span><span class="year">{book.yearString}</span></li>
+							</f:else>
+						</f:if>
+					</f:else>
+				</f:if>
+			</f:for>
+		</ul>
+	</div>
+</div>
+
+<div id="scrollbar">
+	<a id="left_scroll" class="mouseover_left" href="#"></a>
+	<div id="track">
+		<div id="dragBar"></div>
+	</div>
+	<a id="right_scroll" class="mouseover_right" href="#"></a>
+</div>
+
+</f:section>

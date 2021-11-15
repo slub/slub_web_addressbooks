@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-01-03T14:49:48Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="submit" approved="yes">
+			<source></source>
+			<target>Suchen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book" approved="yes">
+			<source>Book</source>
+			<target>Buch</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_list_of_person_names" approved="yes">
+			<source>The list contains the names at the top of each page. If the name you are looking for is missing choose the name alphabetically closest. </source>
+			<target>Die Liste enthält die Namen, die jeweils am Anfang einer Seite stehen. Sollte der von Ihnen gesuchte Name fehlen, wählen Sie bitte den alphabetisch nächstliegenden Eintrag.</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_list_of_street_names" approved="yes">
+			<source>The list contains the street names at the top of each page. If the street name you are looking for is missing choose the street name alphabetically closest. </source>
+			<target>Die Liste enthält die Straßennamen, die jeweils am Anfang einer Seite stehen. Sollte der von Ihnen gesuchte Straßenname fehlen, wählen Sie bitte den alphabetisch nächstliegenden Eintrag.</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_please_select_directory" approved="yes">
+			<source>Select a Directory</source>
+			<target>Wählen Sie ein Verzeichnis aus</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_please_select_location" approved="yes">
+			<source>Select a Location</source>
+			<target>Wählen Sie einen Ort aus</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_please_select_period" approved="yes">
+			<source>Select a Period</source>
+			<target>Wählen Sie einen Zeitraum aus</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book" approved="yes">
+			<source>Browse the whole book</source>
+			<target>Blättern Sie auch durch das gesamte Buch</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_there_is_no_name_directory" approved="yes">
+			<source>There is no directory of names for %1$s. Please have a look in the previous or next volume:</source>
+			<target>Es liegt kein Personenverzeichnis für %1$s vor. Suchen Sie doch z.B. im Jahrgang vorher oder nachher:</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_there_is_no_street_directory" approved="yes">
+			<source>There is no directory of street names for %1$s. Please have a look in the previous or next volume:</source>
+			<target>Es liegt kein Straßenverzeichnis für %s vor. Suchen Sie doch z.B. im Jahrgang vorher oder nachher:</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_you_searched_for_closest" approved="yes">
+			<source>You searched for &quot;%1$s&quot;. This name may be found on the following page: </source>
+			<target>Sie haben nach &quot;%1$s&quot; gesucht. Dieser Name könnte auf folgender Seite stehen:</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.link_map" approved="yes">
+			<source>Link Map</source>
+			<target>Link Map</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.meta_description" approved="yes">
+			<source>Discover historical directories by selection of a location and a period. You receive a list of names and streets of %1$s in the year %2$s.</source>
+			<target>Wählen Sie aus der Liste der Personenamen und Straßennamen im digitalisierten, historischen Adressbuch von %1$s aus dem Jahr %2$s.</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.meta_page_title" approved="yes">
+			<source>List of street names and surnames of</source>
+			<target>Straßen- und Personenverzeichnis von</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.meta_title" approved="yes">
+			<source>Historical Addressbook of</source>
+			<target>Historisches Adressbuch von</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_behoerdenverzeichnis" approved="yes">
+			<source>Directory of Authorities</source>
+			<target>Behördenverzeichnis</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen" approved="yes">
+			<source>Page Berufsklassen</source>
+			<target>Berufsklassen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen_gewerbe" approved="yes">
+			<source>Business Directory</source>
+			<target>Berufsklassen und Gewerbebetriebe</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_genossenschaftsregister" approved="yes">
+			<source>Directory of Cooperatives</source>
+			<target>Genossenschaftsregister</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_gewerbe" approved="yes">
+			<source>Page Gewerbe</source>
+			<target>Gewerbeverzeichnis</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_handelsregister" approved="yes">
+			<source>Directory of Trade Associations</source>
+			<target>Handelsregister</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.place_id" approved="yes">
+			<source>placeId</source>
+			<target>Orts ID</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.ppn" approved="yes">
+			<source>ppn of the book</source>
+			<target>PPN des Buchs</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.search_field_label" approved="yes">
+			<source>Search for Streets and Surnames...</source>
+			<target>Suchen Sie nach Straßen- und Personennamen...</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.submit" approved="yes">
+			<source>Check DLF</source>
+			<target>Mit DLF abgleichen.</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.updateChapters" approved="yes">
+			<source>Update Chapter Links</source>
+			<target>Kapitel- und Kartenlinks abgleichen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.year" approved="yes">
+			<source>Year of Publication</source>
+			<target>Erscheinungsjahr</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.year_string" approved="yes">
+			<source>Year as String</source>
+			<target>Jahresanzeige</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.image" approved="yes">
+			<source></source>
+			<target>Abbildung</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.list.image" approved="yes">
+			<source></source>
+			<target>Abbildung</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.name" approved="yes">
+			<source></source>
+			<target>Personennamen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.page" approved="yes">
+			<source></source>
+			<target>Seite</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.searchform" approved="yes">
+			<source></source>
+			<target>Suchformular Personen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.submit" approved="yes">
+			<source></source>
+			<target>Suchen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place" approved="yes">
+			<source>Town of the Book</source>
+			<target>Stadt</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.hov_link" approved="yes">
+			<source>Gazetteers of Saxony</source>
+			<target>Historisches Ortsverzeichnis</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.place" approved="yes">
+			<source>Cityname</source>
+			<target>Stadt</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_street.name" approved="yes">
+			<source></source>
+			<target>Straßennamen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_street.searchform" approved="yes">
+			<source></source>
+			<target>Suchformular Straßen</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

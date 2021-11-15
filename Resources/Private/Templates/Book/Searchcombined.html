@@ -1,0 +1,140 @@
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+<section class="searchBar">
+	<f:form name="bookSearch" action="search" pageUid="{settings.pidSearchPersons}" controller="Book" method="post" noCache="1" noCacheHash="1">
+
+	<div class="formLocation">
+		<label for="placeId"><f:translate key="tx_slubwebaddressbooks_domain_model_place.place"></f:translate></label>
+		<f:form.select id="placeId" name="placeId" property="placeId" value="{selectedPlaceId}" options="{places}" optionLabelField="Place" optionValueField="uid" />
+	</div>
+	<div class="formTime">
+		<label for="year"><f:translate key="tx_slubwebaddressbooks_domain_model_book.year"></f:translate></label>
+		<div id="placeAjax">
+			<select id="year" name="tx_slubwebaddressbooks_booksearch[bookSearch][year]">
+				<f:groupedFor each="{years}" as="allDistinctYears" groupBy="year">
+					<f:for each="{allDistinctYears}" as="syear" key="label" iteration="iterator">
+						<f:if condition="{iterator.isFirst}"><f:then>
+							<f:if condition="{syear.year}"><f:then>
+								<f:if condition="{selectedYear}=={syear.year}">
+									<f:then><option value="{syear.year}" selected="selected">{syear.yearString}</option></f:then>
+									<f:else><option value="{syear.year}">{syear.yearString}</option></f:else>
+								</f:if>
+								</f:then></f:if>
+							</f:then></f:if>
+					</f:for>
+				</f:groupedFor>
+			</select>
+		</div>
+	</div>
+
+	<div class="formSearch">
+		<label for="SearchString"><f:translate key="tx_slubwebaddressbooks_domain_model_person.name"></f:translate></label>
+		<f:if condition="{searchName}">
+		<f:then>
+			<f:form.textfield id="SearchString" name="SearchString" property="SearchString" value="{searchName}" />
+		</f:then>
+		<f:else>
+		<f:then>
+			<f:form.textfield id="SearchString" name="SearchString" property="SearchString" value="<f:translate key='tx_slubwebaddressbooks_domain_model_book.search_field_label'></f:translate>" />
+		</f:then>
+		</f:else>
+		</f:if>
+	</div>
+
+	<div class="formSubmit">
+				<f:form.submit value="<f:translate key=\"tx_slubwebaddressbooks_domain_model_person.submit\" />" />
+	</div>
+	</f:form>
+
+	<code>
+		<script language="javascript">
+			ajaxUrl = "{f:uri.action(action:'ajax', pageType:'1298')}";
+
+			(function($) {
+
+				$(document).ready(function() {
+
+					function addSelectChange(){
+						$('#BookId').on('click', function() {
+							var wrapper = {
+							'tx_slubwebaddressbooks_personsearch[bookId]': $('#BookId').val(),
+							'tx_slubwebaddressbooks_personsearch[placeId]': '0'
+						}
+						$.ajax({
+							url: ajaxUrl,
+							data: wrapper,
+							dataType: "json",
+							success: function(data) {
+								var output = '<select id="PersonSelector" name="tx_slubwebaddressbooks_personsearch[personSearch][PersonSelector]">';
+								$.each(data, function(key, val) {
+									output += '<option value="'+val+'">'+val+'</option>';
+								});
+								output += '</select/>';
+								$('#nameAjax').html( output );
+							},
+						});
+						return false;
+						});
+					};
+
+					addSelectChange();
+
+					$('#placeId').on("change",  function(){
+
+						var wrapper = {
+							'tx_slubwebaddressbooks_personsearch[bookId]': $('#BookId').val(),
+							'tx_slubwebaddressbooks_personsearch[placeId]': $('#placeId').val()
+						}
+						$.ajax({
+							url: ajaxUrl,
+							data: wrapper,
+							dataType: "json",
+
+							success: function(data) {
+								var output = '<select id="BookId" name="tx_slubwebaddressbooks_booksearch[bookSearch][year]">';
+								var fields = '';
+								$.each(data, function(key, val) {
+									fields = val.split(':');
+									output += '<option value="'+fields[0]+'">'+fields[1]+'</option>';
+								});
+								output += '</select/>';
+
+								$('#placeAjax').html( output );
+								/* bind bookId onchange again */
+								addSelectChange();
+								/* addSelectChangeName(); */
+							},
+							fail: function() {
+								alert('Load was NOT performed.');
+							}
+						});
+						return false;
+					});
+				});
+
+
+				function log( message ) {
+							$( "<div/>" ).text( message ).prependTo( "#log" );
+							$( "#log" ).scrollTop( 0 );
+				}
+
+
+			})(jQuery);
+		</script>
+	</code>
+</section>
+
+</f:section>

@@ -1,0 +1,43 @@
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+		<ul class="guidedtour">
+			<li class="selectLocation {css.map}">
+				<f:link.action action="list" controller="Place" pageUid="{settings.pidPlaceMap}" title="<f:translate key=\"tx_slubwebaddressbooks_domain_model_book.hint_please_select_location\" />">
+				<span><f:translate key="tx_slubwebaddressbooks_domain_model_book.hint_please_select_location" /></span></f:link.action>
+			</li>
+			<li class="selectTime {css.timeline}">
+				<f:if condition="{placeId}"><f:then>
+					<f:link.action action="timeline" controller="Book" pageUid="{settings.pidTimeline}" arguments="{placeId : placeId}" title="<f:translate key=\"tx_slubwebaddressbooks_domain_model_book.hint_please_select_period\" />">
+						<span><f:translate key="tx_slubwebaddressbooks_domain_model_book.hint_please_select_period" /></span>
+					</f:link.action>
+				</f:then><f:else>
+						<span><f:translate key="tx_slubwebaddressbooks_domain_model_book.hint_please_select_period" /></span>
+				</f:else>
+				</f:if>
+			</li>
+			<li class="selectLists {css.list}">
+				<f:if condition="{year}"><f:then>
+					<f:link.action action="list" controller="Book" pageUid="{settings.pidSearchPersons}" arguments="{year : year, placeId : placeId}" title="<f:translate key=\"tx_slubwebaddressbooks_domain_model_book.hint_please_select_directory\" />">
+						<span><f:translate key="tx_slubwebaddressbooks_domain_model_book.hint_please_select_directory" /></span>
+					</f:link.action>
+				</f:then><f:else>
+						<span><f:translate key="tx_slubwebaddressbooks_domain_model_book.hint_please_select_directory" /></span>
+				</f:else>
+				</f:if>
+			</li>
+		</ul>
+
+</f:section>

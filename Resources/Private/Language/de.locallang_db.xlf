@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2018-01-03T15:00:16Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book" approved="yes">
+			<source>Book</source>
+			<target>Buch</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.link_map" approved="yes">
+			<source>Link Map</source>
+			<target>Link zur Karte in der Fotothek</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.link_map_thumb" approved="yes">
+			<source>Link Map Thumb</source>
+			<target>Link zum Kartenvorschaubild</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_behoerdenverzeichnis" approved="yes">
+			<source>Page Behoerdenverzeichnis</source>
+			<target>Behördenverzeichnis</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen" approved="yes">
+			<source></source>
+			<target>Berufsklassen</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen_und_gewerbe" approved="yes">
+			<source>Page Berufsklassen Und Gewerbe</source>
+			<target>Berufsklassen und Gewerbebetriebe</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_genossenschaftsregister" approved="yes">
+			<source>Page Genossenschaftsregister</source>
+			<target>Genossenschaftsregister</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_gewerbe" approved="yes">
+			<source></source>
+			<target>Gewerbebetriebe</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_handelsregister" approved="yes">
+			<source>Page Handelsregister</source>
+			<target>Handelsregister</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.persons" approved="yes">
+			<source>Persons Table</source>
+			<target>Personen-Tabelle</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.place_id" approved="yes">
+			<source>Place Id</source>
+			<target>Orts ID</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.ppn" approved="yes">
+			<source>Ppn</source>
+			<target>PPN</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.streets" approved="yes">
+			<source>Streets Table</source>
+			<target>Straßen-Tabelle</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_person.name" approved="yes">
+			<source></source>
+			<target>Personenname</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.place" approved="yes">
+			<source>Place</source>
+			<target>Ort</target>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_street.name" approved="yes">
+			<source></source>
+			<target>Straße</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

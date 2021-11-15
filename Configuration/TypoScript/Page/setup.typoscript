@@ -1,0 +1,149 @@
+page = PAGE
+page {
+
+  bodyTag = <body class="home">
+
+  1 = LOAD_REGISTER
+  1 {
+    pageDescription {
+      data = DB:pages:7182:abstract // field:description // field:abstract // description // DB:pages:7182:abstract
+      trim = 1
+      stripHtml = 1
+      htmlSpecialChars = 1
+      brTag.char=32
+    }
+  }
+
+  meta {
+    keywords.field = keywords
+    author = SLUB Dresden
+    viewport = width=device-width
+    description.data = register:pageDescription
+    google-site-verification = HNiInIVEv-5gMXJhQwpuVT_zoW91r6FaisEULu-dO44
+  }
+
+  shortcutIcon = EXT:slub_web_addressbooks/Resources/Public/Images/favicon.ico
+
+  headerData {
+    10 = TEXT
+    10.data = register:addressBookTitle // field:subtitle // field:title
+    10.noTrimWrap = |<title>Historische Adressbücher: |</title>|
+
+    90 = TEXT
+    90.value(
+        <link rel="apple-touch-icon" href="/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/touchicon.png" />
+    )
+
+    200 = TEXT
+    200.value (
+      <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    )
+  }
+
+  includeCSS {
+    openlayers = EXT:slub_web_addressbooks/Resources/Public/Js/OpenLayers/ol.css
+    style = EXT:slub_web_addressbooks/Resources/Public/Css/style.css
+  }
+
+  includeJS {
+    plugin = EXT:slub_web_addressbooks/Resources/Public/Js/plugins.js
+    script = EXT:slub_web_addressbooks/Resources/Public/Js/script.js
+    jqueryscroll = EXT:slub_web_addressbooks/Resources/Public/Js/jquery.horizontal.scroll.min.js
+    typekit = https://use.typekit.com/mjp2zwz.js
+    typo3.external = 1
+  }
+  includeJSLibs {
+      jQuery = //code.jquery.com/jquery-2.2.4.min.js
+      jQuery {
+          external = 1
+          disableCompression = 1
+          integrity = sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=
+          excludeFromConcatenation = 1
+          allWrap = |<script type="text/javascript">if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='typo3conf/ext/slub_web_addressbooks/Resources/Public/Js/jquery-2.2.4.min.js' type='text/javascript'%3E%3C/script%3E"));}</script>
+      }
+      openlayers = EXT:slub_web_addressbooks/Resources/Public/Js/OpenLayers/ol.js
+  }
+  includeJSFooterlibs {
+      #jqueryUiMouseSlider = EXT:slub_web_ldp/Resources/Public/Javascript/jquery-ui-mouse-slider.js
+  }
+
+  10 = FLUIDTEMPLATE
+	10 {
+	  file = EXT:slub_web_addressbooks/Resources/Private/Templates/Content.html
+	  layoutRootPath = EXT:slub_web_addressbooks/Resources/Private/Layouts/
+	  partialRootPath = EXT:slub_web_addressbooks/Resources/Private/Partials/
+
+		variables {
+			pageTitle = TEXT
+			pageTitle.data = page:title
+
+			content < styles.content.get
+			contentRight < styles.content.getRight
+
+			rootPageId = TEXT
+			rootPageId.value = {$plugin.tx_slubwebaddressbooks.rootPid}
+
+			homePageId = TEXT
+			homePageId.value = {$plugin.tx_slubwebaddressbooks.homePageId}
+
+			imprintPageId = TEXT
+			imprintPageId.value = {$plugin.tx_slubwebaddressbooks.imprintPid}
+
+			privacyPageId = TEXT
+			privacyPageId.value = {$plugin.tx_slubwebaddressbooks.privacyPid}
+
+
+		    guidedTour = CASE
+		    guidedTour {
+				key.field = uid
+
+				default = TEXT
+				default.value = guidedSearch
+
+				# Einfuehrung
+				7187 = TEXT
+				7187.value = guidedSearch intro
+
+				# Karte
+				7287 = TEXT
+				7287.value = guidedSearch location
+
+				# Zeitstrahl
+				7184 = TEXT
+				7184.value = guidedSearch timeline
+
+				# Ergebnisse
+				7185 = TEXT
+				7185.value = guidedSearch lists
+
+				7341 = TEXT
+				7341.value = guidedSearch searchResults lists
+			}
+		}
+	}
+}
+
+[globalVar = GP:L=1]
+page.headerData.10.noTrimWrap = |<title>Historical Addressbooks: |</title>|
+[global]
+
+[globalVar = TSFE:id = {$plugin.tx_slubwebaddressbooks.rootPid}]
+page {
+	bodyTag = <body class="home">
+}
+[global]
+[PIDinRootline = {$plugin.tx_slubwebaddressbooks.rootPid}] AND [globalVar = TSFE:id != {$plugin.tx_slubwebaddressbooks.rootPid}]
+page {
+	bodyTag = <body class="subpage">
+}
+[global]
+
+[PIDinRootline = {$plugin.tx_slubwebaddressbooks.homePageId}]
+page.10 {
+  file = EXT:slub_web_addressbooks/Resources/Private/Templates/Start.html
+}
+[global]
+
+# we need this setting to place multiple plugins one one pages
+# see: https://wiki.typo3.org/Exception/CMS/1313855175
+plugin.tx_slubwebaddressbooks.mvc.callDefaultActionIfActionCantBeResolved = 1

@@ -1,0 +1,26 @@
+{namespace n=Slub\SlubWebAddressbooks\ViewHelpers}
+<n:metaTag property="og:type" content="website" />
+<n:metaTag property="og:title" content="<f:translate key='tx_slubwebaddressbooks_domain_model_book.meta_title' /> {place.place} {book}" />
+<n:metaTag property="og:description" content="<f:format.printf arguments=\"{0: '{place.place}', 1: '{book}'}\"><f:translate key='tx_slubwebaddressbooks_domain_model_book.meta_description' /></f:format.printf>" />
+
+<n:metaTag property="og:site_name" content="{settings.opengraph.site_name}" />
+<n:metaTag property="og:locale" content="{settings.opengraph.locale}" />
+
+<f:if condition="{LinkMap}">
+	<f:then>
+		<f:if condition="{LinkMapThumb}">
+			<f:then>
+				<n:metaTag
+					property="og:image"
+					content="{LinkMapThumb}"
+					 />
+			</f:then>
+		</f:if>
+	</f:then>
+</f:if>
+
+<n:metaTag property="og:latitude" content="{place.lat}" />
+<n:metaTag property="og:longitude" content="{place.lon}" />
+<n:metaTag property="og:locality" content="{place.place}" />
+<n:metaTag property="og:region" content="SN" />
+<n:metaTag property="og:country-name" content="DE" />

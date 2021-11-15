@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-01-23T09:38:24Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book" xml:space="preserve">
+			<source>Book</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_list_of_person_names" xml:space="preserve">
+			<source>The list contains the names at the top of each page. If the name you are looking for is missing choose the name alphabetically closest. </source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_list_of_street_names" xml:space="preserve">
+			<source>The list contains the street names at the top of each page. If the street name you are looking for is missing choose the street name alphabetically closest. </source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_please_select_directory" xml:space="preserve">
+			<source>Select a Directory</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_please_select_location" xml:space="preserve">
+			<source>Select a Location</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_please_select_period" xml:space="preserve">
+			<source>Select a Period</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book" xml:space="preserve">
+			<source>Browse the whole book</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_there_is_no_name_directory" xml:space="preserve">
+			<source>There is no directory of names for %1$s. Please have a look in the previous or next volume:</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_there_is_no_street_directory" xml:space="preserve">
+			<source>There is no directory of street names for %1$s. Please have a look in the previous or next volume:</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.hint_you_searched_for_closest" xml:space="preserve">
+			<source>You searched for &quot;%1$s&quot;. This name may be found on the following page: </source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.link_map" xml:space="preserve">
+			<source>Link Map</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.meta_description" xml:space="preserve">
+			<source>Discover historical directories by selection of a location and a period. You receive a list of names and streets of %1$s in the year %2$s.</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.meta_page_title" xml:space="preserve">
+			<source>List of street names and surnames of</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.meta_title" xml:space="preserve">
+			<source>Historical Addressbook of</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_behoerdenverzeichnis" xml:space="preserve">
+			<source>Directory of Authorities</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen" xml:space="preserve">
+			<source>Page Berufsklassen</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen_gewerbe" xml:space="preserve">
+			<source>Business Directory</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_genossenschaftsregister" xml:space="preserve">
+			<source>Directory of Cooperatives</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_gewerbe" xml:space="preserve">
+			<source>Page Gewerbe</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_handelsregister" xml:space="preserve">
+			<source>Directory of Trade Associations</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.place_id" xml:space="preserve">
+			<source>placeId</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.ppn" xml:space="preserve">
+			<source>ppn of the book</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.search_field_label" xml:space="preserve">
+			<source>Search for Streets and Surnames...</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.submit" xml:space="preserve">
+			<source>Check DLF</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.updateChapters" xml:space="preserve">
+			<source>Update Chapter Links</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.year" xml:space="preserve">
+			<source>Year of Publication</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.year_string" xml:space="preserve">
+			<source>Year as String</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place" xml:space="preserve">
+			<source>Town of the Book</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.hov_link" xml:space="preserve">
+			<source>Gazetteers of Saxony</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.place" xml:space="preserve">
+			<source>Cityname</source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

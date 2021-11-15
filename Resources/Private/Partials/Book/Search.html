@@ -1,0 +1,55 @@
+<div class="resultStatus">
+	<h3>
+	<f:if condition="{bookPersons.ppn}">
+		<f:then>
+			<f:link.external title="<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book'></f:translate> {place.place} {bookPersons.yearString}!" uri="http://digital.slub-dresden.de/id{bookPersons.ppn}" target="_blank">{place.place} {bookPersons.yearString}</f:link.external>
+		</f:then>
+		<f:else>
+			<f:link.external title="<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book'></f:translate> {place.place} {bookStreets.yearString}!" uri="http://digital.slub-dresden.de/id{bookStreets.ppn}" target="_blank">{place.place} {bookStreets.yearString}</f:link.external>
+		</f:else>
+	</f:if>
+	</h3>
+
+	<div class="listDivChapters">
+		<ul class="divChapters">
+			<f:if condition="{pageHovLink}"><f:then>
+			<li class="hov"><f:link.external uri="{pageHovLink}" target="_blank"><f:translate key="tx_slubwebaddressbooks_domain_model_place.hov_link"></f:translate></f:link.external></li>
+			</f:then></f:if>
+			<f:if condition="{pageBehoerdenverzeichnis}"><f:then>
+			<li class="behoerdenverzeichnis"><f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{pageBehoerdenverzeichnis}" target="_blank"><f:translate key="tx_slubwebaddressbooks_domain_model_book.page_behoerdenverzeichnis"></f:translate></f:link.external></li>
+			</f:then></f:if>
+			<f:if condition="{PageBerufsklassenUndGewerbe}"><f:then>
+			<li class="berufsklassen"><f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{PageBerufsklassenUndGewerbe}" target="_blank"><f:translate key="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen_gewerbe"></f:translate></f:link.external></li>
+			</f:then></f:if>
+			<f:if condition="{PageHandelsregister}"><f:then>
+			<li class="handelsregister"><f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{PageHandelsregister}" target="_blank"><f:translate key="tx_slubwebaddressbooks_domain_model_book.page_handelsregister"></f:translate></f:link.external></li>
+			</f:then></f:if>
+			<f:if condition="{PageGenossenschaftsregister}"><f:then>
+			<li class="genossenschaftsregister"><f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{PageGenossenschaftsregister}" target="_blank"><f:translate key="tx_slubwebaddressbooks_domain_model_book.page_genossenschaftsregister"></f:translate></f:link.external></li>
+			</f:then></f:if>
+
+
+
+		</ul>
+	</div>
+
+		<ul class="yearnav">
+		<f:if condition="{yearFirst}=={yearCurrent}">
+			<f:then><li class="yearfirst"><span>{yearFirst}</span></li></f:then>
+			<f:else><li class="yearfirst"><f:link.action action="search" controller="Book" arguments="{year : yearFirst, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearFirst}</f:link.action></li></f:else>
+		</f:if>
+		<f:if condition="{yearPrevious}=={yearCurrent}">
+			<f:then><li class="yearleft"><span>{yearPrevious}</span></li></f:then>
+			<f:else><li class="yearleft"><f:link.action action="search" controller="Book" arguments="{year : yearPrevious, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearPrevious}</f:link.action></li></f:else>
+		</f:if>
+
+		<f:if condition="{yearNext}=={yearCurrent}">
+			<f:then><li class="yearright"><span>{yearNext}</span></li></f:then>
+			<f:else><li class="yearright"><f:link.action action="search" controller="Book" arguments="{year : yearNext, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearNext}</f:link.action></li></f:else>
+		</f:if>
+		<f:if condition="{yearLast}=={yearCurrent}">
+			<f:then><li class="yearlast"><span>{yearLast}</span></li></f:then>
+			<f:else><li class="yearlast"><f:link.action action="search" controller="Book" arguments="{year : yearLast, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearLast}</f:link.action></li></f:else>
+		</f:if>
+	</ul>
+</div>

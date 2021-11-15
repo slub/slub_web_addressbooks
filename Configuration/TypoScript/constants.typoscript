@@ -1,0 +1,25 @@
+plugin.tx_slubwebaddressbooks {
+	# cat=plugin.tx_slubwebaddressbooks/links/0141; type=int+; label= Rootpage Uid
+	rootPid = 7182
+
+	# cat=plugin.tx_slubwebaddressbooks/links/0141; type=int+; label= Homepage Uid
+	homePageId = 7187
+
+	# cat=plugin.tx_slubwebaddressbooks/links/0141; type=int+; label= Imprint Uid
+	imprintPid = 7286
+
+	privacyPid = 10303
+
+	view {
+		# cat=plugin.tx_slubwebaddressbooks/file; type=string; label=Path to template root (FE)
+		templateRootPath = EXT:slub_web_addressbooks/Resources/Private/Templates/
+		# cat=plugin.tx_slubwebaddressbooks/file; type=string; label=Path to template partials (FE)
+		partialRootPath = EXT:slub_web_addressbooks/Resources/Private/Partials/
+		# cat=plugin.tx_slubwebaddressbooks/file; type=string; label=Path to template layouts (FE)
+		layoutRootPath = EXT:slub_web_addressbooks/Resources/Private/Layouts/
+	}
+	persistence {
+		# cat=plugin.tx_slubwebaddressbooks/links/0140; type=int+; label=Default storage PID
+		storagePid =
+	}
+}

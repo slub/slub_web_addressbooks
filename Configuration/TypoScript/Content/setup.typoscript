@@ -1,0 +1,18 @@
+#
+# Dynamic content library (The heart of columns on homepage)
+# ------------------------------------------------------------------------------------
+#
+lib.dynamicContent = COA
+lib.dynamicContent {
+    5 = LOAD_REGISTER
+    5 {
+        colPos.cObject = TEXT
+        colPos.cObject {
+            value.current = 1
+            ifEmpty = 0
+        }
+    }
+    20 < styles.content.get
+    20.select.where = colPos={register:colPos}
+    20.select.where.insertData = 1
+}

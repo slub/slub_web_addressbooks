@@ -1,0 +1,35 @@
+{namespace si=Slub\SlubWebAddressbooks\ViewHelpers}
+		<a id="skip2top"></a>
+
+		<ul id="skipnav" class="visuallyhidden">
+			<li><a href="#" accesskey="1">go to the homepage</a>&nbsp;(Key: <kbd>1</kbd>)</li>
+			<li><a href="#skip2nav" accesskey="3">go to the navigation</a>&nbsp;(Key: <kbd>3</kbd>)</li>
+			<li><a href="#skip2search" accesskey="2">go to the searchbar</a>&nbsp;(Key: <kbd>2</kbd>)</li>
+			<li><a href="#skip2content" accesskey="2">go to the content area</a>&nbsp;(Key: <kbd>2</kbd>)</li>
+			<li><a href="#imprint" accesskey="4">go to the imprint</a>&nbsp;(Key: <kbd>4</kbd>)</li>
+		</ul>
+
+		<div class="pageOuter">
+			<div class="pageWrapper">
+				<div class="pageContainer">
+					<header role="banner">
+						<h1>
+              <f:link.page pageUid="{rootPageId}" id="homelink" title="<si:pageInfo uid='{rootPageId}' field='title' />"><si:pageInfo uid='{rootPageId}' field='title' /></f:link.page>
+            </h1>
+						<nav class="mainNav">
+							<a id="skip2nav"></a>
+              <f:cObject typoscriptObjectPath="lib.menu" />
+              <f:cObject typoscriptObjectPath="lib.langmenu" />
+							<div class="clearfix"></div>
+						</nav>
+					</header>
+
+          <f:render section="Content" optional="true" arguments="{_all}" />
+
+				</div>
+
+        <f:render section="Footer" partial="Footer" arguments="{_all}" />
+
+			</div>
+		</div>
+<f:render section="Piwik" partial="Piwik" />

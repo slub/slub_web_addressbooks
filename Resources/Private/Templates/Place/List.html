@@ -1,0 +1,265 @@
+<f:layout name="Default" />
+
+This Template is responsible for creating a table of domain objects.
+
+If you modify this template, do not forget to change the overwrite settings
+in /Configuration/ExtensionBuilder/settings.yaml:
+  Resources:
+    Private:
+      Templates:
+        List.html: keep
+
+Otherwise your changes will be overwritten the next time you save the extension in the extension builder
+
+<f:section name="main">
+
+
+<div id="mapdiv">
+  <div id="popup">
+  </div>
+</div>
+
+<script>
+	// Layer with Saxony Shape
+	var lgpx = new ol.layer.VectorTile({
+		source: new ol.source.VectorTile({
+		  format: new ol.format.GPX(),
+      url: "/typo3conf/ext/slub_web_addressbooks/Resources/Public/simplesachsen_07.gpx"
+		}),
+    projection: 'EPSG:3857',
+    style: new ol.style.Style({
+      stroke: new ol.style.Stroke({
+        width: 3,
+        color: [221, 34, 34, 0.7]
+      })
+    }),
+	});
+
+
+  var greylayer = new ol.layer.Tile({
+        source: new ol.source.OSM()
+    });
+  function mygreyscale(tile) {
+    var ctx = tile.canvas;
+    if (ctx) {
+        var imgd = tile.getImageData(0, 0, ctx.width, ctx.height);
+        var pix = imgd.data;
+        for (var i = 0, n = pix.length; i < n; i += 4) {
+            pix[i] = pix[i + 1] = pix[i + 2] = (3 * pix[i] + 4 * pix[i + 1] + pix[i + 2]) / 8;
+        }
+        tile.putImageData(imgd, 0, 0);
+    }
+  }
+  greylayer.on('postcompose', function(event) {
+    mygreyscale(event.context);
+  });
+
+  var textFill = new ol.style.Fill({
+    color: '#fff'
+  });
+  var textStroke = new ol.style.Stroke({
+    color: 'rgba(0, 0, 0, 0.6)',
+    width: 2
+  });
+  var invisibleFill = new ol.style.Fill({
+    color: 'rgba(221, 34, 34, 0.3)'
+  });
+
+  var markerStyle = new ol.style.Style({
+    image: new ol.style.Icon({
+      size: [31, 35],
+      opacity: 0.9,
+      scale: 1,
+      src: '/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/marker.png'
+    })
+  });
+
+  function createMarkerStyleOnFeature(feature) {
+
+    return new ol.style.Style({
+      geometry: feature.getGeometry(),
+      image: new ol.style.Icon({
+        size: [31, 35],
+        opacity: 0.9,
+        scale: 1,
+        src: '/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/marker.png'
+      })
+    });
+  }
+
+  /**
+   * calculate some settings of the cluster
+   */
+  var maxFeatureCount;
+
+  function calculateClusterInfo(resolution) {
+    maxFeatureCount = 0;
+    var features = places.getSource().getFeatures();
+    var feature, radius;
+    for (var i = features.length - 1; i >= 0; --i) {
+      feature = features[i];
+      var originalFeatures = feature.get('features');
+      var extent = ol.extent.createEmpty();
+      var j, jj;
+      for (j = 0, jj = originalFeatures.length; j < jj; ++j) {
+        ol.extent.extend(extent, originalFeatures[j].getGeometry().getExtent());
+      }
+      maxFeatureCount = Math.max(maxFeatureCount, jj);
+      radius = 0.3 * (ol.extent.getWidth(extent) + ol.extent.getHeight(extent)) / resolution;
+      feature.set('radius', radius);
+    }
+  }
+
+  var currentResolution;
+
+  function clusterStyleFunction(feature, resolution) {
+    if (resolution != currentResolution) {
+      calculateClusterInfo(resolution);
+      currentResolution = resolution;
+    }
+    var style;
+    var size = feature.get('features').length;
+    if (size > 1) {
+      style = new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: feature.get('radius'),
+          fill: new ol.style.Fill({
+            color: [221, 34, 34, Math.min(0.8, 0.4 + (size / maxFeatureCount))]
+          })
+        }),
+        text: new ol.style.Text({
+          text: size.toString(),
+          fill: textFill,
+          stroke: textStroke
+        })
+      });
+    } else {
+      style = markerStyle;
+    }
+    return style;
+  }
+
+  function selectStyleFunction(feature) {
+      var styles = [new ol.style.Style({
+        image: new ol.style.Circle({
+          radius: feature.get('radius'),
+          fill: invisibleFill
+        })
+      })];
+      var originalFeatures = feature.get('features');
+      var originalFeature;
+      for (var i = originalFeatures.length - 1; i >= 0; --i) {
+        originalFeature = originalFeatures[i];
+        styles.push(createMarkerStyleOnFeature(originalFeature));
+      }
+      return styles;
+  }
+
+  /**
+   * create cluster layer
+   */
+  var places = new ol.layer.Vector({
+    source: new ol.source.Cluster({
+      distance: 30,
+      source: new ol.source.Vector({
+        url: '/?type=201712291',
+        format: new ol.format.GeoJSON({
+        }),
+      }),
+     }),
+    style: clusterStyleFunction
+  });
+
+  /**
+   * create the map and center to the center of Saxony
+   */
+  var saxonyCenterLonLat = [13.344958, 51.052931];
+  var saxonyCenterLonLatMercator = ol.proj.fromLonLat(saxonyCenterLonLat);
+
+  var map = new ol.Map({
+    layers: [greylayer,lgpx,places],
+    target: document.getElementById('mapdiv'),
+    view: new ol.View({
+      projection: 'EPSG:3857',
+      center: saxonyCenterLonLatMercator,
+      zoom: 8,
+      minZoom: 7
+    })
+  });
+
+  map.addControl(new ol.control.ZoomSlider());
+
+
+  // create the popup element and add it to the map
+  var element = document.getElementById('popup');
+
+  var popup = new ol.Overlay({
+    element: element,
+    positioning: 'top-left',
+    stopEvent: false,
+    offset: [0, 10]
+  });
+  map.addOverlay(popup);
+
+  var pointerMove = new ol.interaction.Select({
+      condition: ol.events.condition.pointerMove,
+      layers:[places],
+      multi: true,
+      style: selectStyleFunction
+    });
+
+  map.addInteraction(pointerMove);
+
+  var pointerMoveFeatures = pointerMove.getFeatures();
+  // when feature is removed - move it outside the visible area
+  pointerMoveFeatures.on('remove', function(event) {
+    popup.setPosition(0);
+  });
+
+  map.on('click', function(evt) {
+      var ft = map.forEachFeatureAtPixel(evt.pixel, function(f, l){return f;});
+      if (ft) {
+          var features = ft.get('features');
+          if (features.length > 1) {
+            map.getView().setZoom(map.getView().getZoom()+1);
+            map.getView().setCenter(features[0].getGeometry().getCoordinates());
+          } else {
+            var url = features[0].get('url');
+            document.location = url;
+          }
+      }
+  });
+
+  map.on('pointermove', function(evt) {
+    var ft = map.forEachFeatureAtPixel(evt.pixel, function(f, l){return f;});
+    if (ft) {
+        var features = ft.get('features');
+        if (features) {
+          var name = '';
+          var coordinates = [0,0];
+          var coordinates_pre = [0,0];
+          if (features.length > 1) {
+              features.forEach(function(feature){
+              name += feature.get('name') + '<br />';
+              coordinates_pre = feature.getGeometry().getCoordinates();
+              if (coordinates[1] == 0 || coordinates_pre[1] < coordinates[1]) {
+                coordinates = coordinates_pre;
+              }
+            });
+          } else {
+            var feature = features[0];
+            name = feature.get('name');
+            coordinates = feature.getGeometry().getCoordinates();
+          }
+          popup.setPosition(coordinates);
+          element.innerHTML = '<div class="olPopContent"><div class="popArrow"></div>' + name + '</div>';
+        }
+    }
+    // change mouse cursor when over marker
+    var pixel = map.getEventPixel(evt.originalEvent);
+    var hit = map.hasFeatureAtPixel(pixel);
+    map.getTarget().style.cursor = hit ? 'pointer' : '';
+  });
+
+  </script>
+</f:section>

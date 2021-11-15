@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2016-01-15T16:08:22Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book">
+			<source>Book</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.link_map">
+			<source>Link Map</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.link_map_thumb">
+			<source>Link Map Thumb</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.order_i_j">
+			<source>Order I J</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.order_umlaute">
+			<source>Order Umlaute</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_behoerdenverzeichnis">
+			<source>Page Behoerdenverzeichnis</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_berufsklassen_und_gewerbe">
+			<source>Page Berufsklassen Und Gewerbe</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_genossenschaftsregister">
+			<source>Page Genossenschaftsregister</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.page_handelsregister">
+			<source>Page Handelsregister</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.place_id">
+			<source>Place Id</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.ppn">
+			<source>Ppn</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.streets">
+			<source>Streets Table</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.persons">
+			<source>Persons Table</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.year">
+			<source>Year</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_book.year_string">
+			<source>Year String</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place">
+			<source>Place</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.gndid">
+			<source>Gndid</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.hov_link">
+			<source>Hov Link</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.lat">
+			<source>Lat</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.lon">
+			<source>Lon</source>
+		</trans-unit>
+		<trans-unit id="tx_slubwebaddressbooks_domain_model_place.place">
+			<source>Place</source>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>

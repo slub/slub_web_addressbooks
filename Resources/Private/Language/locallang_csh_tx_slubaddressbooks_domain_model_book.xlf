@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-05-35T09:36:35Z" product-name="slub_web_addressbooks">
+		<header/>
+		<body>
+
+			<trans-unit id="year_string.description">
+				<source>Year as String</source>
+			</trans-unit>
+			<trans-unit id="year.description">
+				<source>Year of Publication</source>
+			</trans-unit>
+			<trans-unit id="type.description">
+				<source>1: Persons, 2:  Streets</source>
+			</trans-unit>
+			<trans-unit id="ppn.description">
+				<source>ppn of the book</source>
+			</trans-unit>
+			<trans-unit id="is_available.description">
+				<source>is book available for presentation</source>
+			</trans-unit>
+			<trans-unit id="page_behoerdenverzeichnis.description">
+				<source>Page of Behoerdenverzeichnis</source>
+			</trans-unit>
+			<trans-unit id="page_berufsklassen_und_gewerbe.description">
+				<source>pageBerufsklassenUndGewerbe</source>
+			</trans-unit>
+			<trans-unit id="page_handelsregister.description">
+				<source>pageHandelsregister</source>
+			</trans-unit>
+			<trans-unit id="page_genossenschaftsregister.description">
+				<source>pageGenossenschaftsregister</source>
+			</trans-unit>
+			<trans-unit id="link_map.description">
+				<source>Link to Map in Deutschefotothek</source>
+			</trans-unit>
+			<trans-unit id="link_map_thumb.description">
+				<source>Link to Thumb in Deutschefotothek</source>
+			</trans-unit>
+			<trans-unit id="order_umlaute.description">
+				<source>Ordering of Umlaute</source>
+			</trans-unit>
+			<trans-unit id="order_i_j.description">
+				<source>Ordering of I and J at the beginning</source>
+			</trans-unit>
+			<trans-unit id="place_id.description">
+				<source>placeId</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

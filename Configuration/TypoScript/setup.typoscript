@@ -1,0 +1,25 @@
+plugin.tx_slubwebaddressbooks {
+	view {
+		templateRootPaths.0 = {$plugin.tx_slubwebaddressbooks.view.templateRootPath}
+		partialRootPaths.0 = {$plugin.tx_slubwebaddressbooks.view.partialRootPath}
+		layoutRootPaths.0 = {$plugin.tx_slubwebaddressbooks.view.layoutRootPath}
+	}
+	persistence {
+		storagePid = {$plugin.tx_slubwebaddressbooks.persistence.storagePid}
+	}
+	features {
+	}
+}
+# Configuration
+<INCLUDE_TYPOSCRIPT: source="DIR:EXT:slub_web_addressbooks/Configuration/TypoScript/Config">
+
+# Navigation
+<INCLUDE_TYPOSCRIPT: source="DIR:EXT:slub_web_addressbooks/Configuration/TypoScript/Navigation">
+
+# Content
+<INCLUDE_TYPOSCRIPT: source="DIR:EXT:slub_web_addressbooks/Configuration/TypoScript/Content">
+
+# Ajax
+<INCLUDE_TYPOSCRIPT: source="DIR:EXT:slub_web_addressbooks/Configuration/TypoScript/Ajax">
+
+<INCLUDE_TYPOSCRIPT: source="DIR:EXT:slub_web_addressbooks/Configuration/TypoScript/Page">

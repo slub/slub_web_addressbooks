@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" datatype="plaintext" original="messages" date="2013-05-35T09:36:35Z" product-name="slub_web_addressbooks">
+		<header/>
+		<body>
+
+			<trans-unit id="place.description">
+				<source>Cityname</source>
+			</trans-unit>
+			<trans-unit id="lat.description">
+				<source>Latitude</source>
+			</trans-unit>
+			<trans-unit id="lon.description">
+				<source>Longitude</source>
+			</trans-unit>
+			<trans-unit id="hov_link.description">
+				<source>Link to Historisches Ortsverzeichnis Sachsen</source>
+			</trans-unit>
+			<trans-unit id="gndid.description">
+				<source>GND-ID</source>
+			</trans-unit>
+		</body>
+	</file>
+</xliff>

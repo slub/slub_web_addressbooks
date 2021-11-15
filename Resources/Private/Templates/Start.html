@@ -1,0 +1,26 @@
+<f:layout name="Page" />
+<div xmlns="http://www.w3.org/1999/xhtml" lang="en"
+   xmlns:f="http://typo3.org/ns/fluid/ViewHelpers">
+
+<f:section name="Content">
+
+  <f:format.raw>{content}</f:format.raw>
+
+  <section class="{guidedTour}">
+    <div class="infoText">
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="1" />
+    </div>
+    <div class="guidedSteps">
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="2" />
+    </div>
+    <div class="guidedContent">
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="3" />
+    </div>
+    <div class="networkBar">
+        <f:cObject typoscriptObjectPath="lib.dynamicContent" data="4" />
+    </div>
+  </section>
+
+</f:section>
+
+</div>
