@@ -1,10 +1,8 @@
 <?php
-if (!defined('TYPO3_MODE')) {
-	die ('Access denied.');
-}
+defined('TYPO3_MODE') || die();
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Slub.' . $_EXTKEY,
+	'Slub.SlubWebAddressbooks',
 	'Booksearch',
 	array(
 		'Book' => 'timeline, search, list, searchcombined',
@@ -16,7 +14,7 @@ if (!defined('TYPO3_MODE')) {
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Slub.' . $_EXTKEY,
+	'Slub.SlubWebAddressbooks',
 	'Personsearch',
 	array(
 		'Person' => 'ajax',
@@ -28,7 +26,7 @@ if (!defined('TYPO3_MODE')) {
 );
 
 \TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
-	'Slub.' . $_EXTKEY,
+	'Slub.SlubWebAddressbooks',
 	'Placesearch',
 	array(
 		'Place' => 'list, geojson',

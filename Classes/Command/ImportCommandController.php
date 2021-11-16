@@ -25,6 +25,11 @@ namespace Slub\SlubWebAddressbooks\Command;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Resource\ProcessedFileRepository;
+use TYPO3\CMS\Core\Resource\File;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
 use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Slub\SlubWebAddressbooks\Domain\Repository\BookRepository;
@@ -34,11 +39,6 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
   * ImportCommandController
   */
 
- use TYPO3\CMS\Core\Utility\GeneralUtility;
- use TYPO3\CMS\Core\Utility\MathUtility;
- use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
- use TYPO3\CMS\Core\Resource\ProcessedFileRepository;
- use TYPO3\CMS\Core\Resource\File;
 
  class ImportCommandController extends CommandController
 {
