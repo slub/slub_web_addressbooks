@@ -38,8 +38,6 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
  /**
   * ImportCommandController
   */
-
-
  class ImportCommandController extends CommandController
 {
 
@@ -79,23 +77,23 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
     protected $configurationManager;
 
     /**
-    * injectConfigurationManager
-    *
-    * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-    * @return void
-    */
+     * injectConfigurationManager
+     *
+     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
+     * @return void
+     */
     public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
     {
         $this->configurationManager = $configurationManager;
     }
 
     /**
-        * Init some settings like storagePid
-        *
-        * @param int $storagePid
-        *
-        * @return void
-        */
+     * Init some settings like storagePid
+     *
+     * @param int $storagePid
+     *
+     * @return void
+     */
     protected function init($storagePid = -1)
     {
 
@@ -191,24 +189,24 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
             $placeObj = $this->placeRepository->findOneByPlace($townName);
 
             if (!$placeObj) {
-              $placeObj = $this->objectManager->get(\Slub\SlubWebAddressbooks\Domain\Model\Place::class);
-              $placeObj->setPlace($townName);
-              echo "NEW: " . $townName . '(' . $timestamp . ')' . "\n";
+                $placeObj = $this->objectManager->get(\Slub\SlubWebAddressbooks\Domain\Model\Place::class);
+                $placeObj->setPlace($townName);
+                echo "NEW: " . $townName . '(' . $timestamp . ')' . "\n";
             } else {
-              if (is_object($placeObj->getTstamp())) {
-                $timestampPlace = $placeObj->getTstamp()->getTimestamp();
-              } else {
-                $timestampPlace = 0;
-              }
-              if ($timestampPlace > $timestamp) {
-                echo "SKIP " . $townName . ' as File is already indexed (' . $timestampPlace . '>' . $timestamp . ')' . "\n";
-                return;
-              } else {
-                // update activity
-                $update = true;
-                $placeObj->setTstamp(time());
-                echo "UPDATE " . $townName . ' (' . $timestampPlace . '<' . $timestamp . ')' . "\n";
-              }
+                if (is_object($placeObj->getTstamp())) {
+                    $timestampPlace = $placeObj->getTstamp()->getTimestamp();
+                } else {
+                    $timestampPlace = 0;
+                }
+                if ($timestampPlace > $timestamp) {
+                    echo "SKIP " . $townName . ' as File is already indexed (' . $timestampPlace . '>' . $timestamp . ')' . "\n";
+                    return;
+                } else {
+                    // update activity
+                    $update = true;
+                    $placeObj->setTstamp(time());
+                    echo "UPDATE " . $townName . ' (' . $timestampPlace . '<' . $timestamp . ')' . "\n";
+                }
             }
             $placeObj->setGndid((string)$currentSheet->getCell('B3'));
             $placeObj->setHovLink((string)$currentSheet->getCell('C3'));
@@ -218,9 +216,9 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
             $placeObj->setLon(number_format(str_replace(',', '.', (string)$currentSheet->getCell('E3')), 8));
 
             if ($update) {
-              $this->placeRepository->update($placeObj);
+                $this->placeRepository->update($placeObj);
             } else {
-              $this->placeRepository->add($placeObj);
+                $this->placeRepository->add($placeObj);
             }
 
             $this->doPersistAll();
@@ -235,26 +233,26 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 
             // sometimes the PPN is missing - without it, we can't do anything
             if (!$placeObj || empty($bookPpn)) {
-              echo $absFileName . ': ABORT! (' . $sheetName . ')';
-              continue;
+                echo $absFileName . ': ABORT! (' . $sheetName . ')';
+                continue;
             } else {
-              echo $sheetName . ', ';
+                  echo $sheetName . ', ';
             }
 
             if (strpos($sheetName, '-') === FALSE) {
-              $year = (int)$sheetName;
+                $year = (int)$sheetName;
             } else {
-              $year = substr($sheetName, 0, strpos($sheetName, '-'));
+                $year = substr($sheetName, 0, strpos($sheetName, '-'));
             }
 
             $bookObj = $this->bookRepository->findOneByPpnAndPlaceId($bookPpn, $placeObj);
 
             if (!$bookObj) {
-              $bookObj = $this->objectManager->get(\Slub\SlubWebAddressbooks\Domain\Model\Book::class);
-              $bookObj->setPpn($bookPpn);
+                $bookObj = $this->objectManager->get(\Slub\SlubWebAddressbooks\Domain\Model\Book::class);
+                $bookObj->setPpn($bookPpn);
             } else {
-              // update activity
-              $update = true;
+                // update activity
+                $update = true;
             }
 
             $bookObj->setYearString($sheetName);
@@ -346,10 +344,12 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
               }
 
               switch ($type) {
-                case 'person' :   $bookObj->setPersons($allNames);
-                              break;
-                case 'street' :   $bookObj->setStreets($allNames);
-                              break;
+                case 'person':
+                    $bookObj->setPersons($allNames);
+                    break;
+                case 'street':
+                    $bookObj->setStreets($allNames);
+                    break;
               }
 
             }
@@ -382,9 +382,9 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 
     /**
      * Persist All Changes upto now.
-    *
-    * @return void
-    */
+     *
+     * @return void
+     */
     protected function doPersistAll()
     {
 
