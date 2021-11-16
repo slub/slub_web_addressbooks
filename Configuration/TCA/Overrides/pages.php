@@ -8,7 +8,7 @@ call_user_func(function()
      */
     \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::registerPageTSConfigFile (
         'slub_web_addressbooks',
-        'Configuration/TsConfig/Page/setup.tsconfig',
+        'Configuration/TsConfig/setup.tsconfig',
         'Historische Adressbücher: Page TS'
     );
 

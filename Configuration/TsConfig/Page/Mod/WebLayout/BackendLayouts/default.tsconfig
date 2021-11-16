@@ -1,29 +1,38 @@
 #
 # Backendlayout: default
 #
-mod {
-    web_layout {
-        BackendLayouts {
-            default {
-                title = LLL:EXT:slub_web_sachsendigital/Resources/Private/Language/backend.xlf:backend_layout.default
-                config {
-                    backend_layout {
-                        colCount = 1
-                        rowCount = 1
-                        rows {
-                            1 {
-                                columns {
-                                    1 {
-                                        name = Inhalt
-                                        colPos = 0
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-                icon = EXT:slub_web_sachsendigital/Resources/Public/Images/BackendLayouts/default.png
+mod.web_layout.BackendLayouts {
+  default {
+    title =  LLL:EXT:slub_web_addressbooks/Resources/Private/Language/backend.xlf:backend_layout.default
+    icon = EXT:slub_web_addressbooks/Resources/Public/Images/bgIcon.png
+    config {
+      backend_layout {
+        colCount = 2
+        rowCount = 2
+        rows {
+          1 {
+            columns {
+              1 {
+                name = Search Bar
+                colspan = 2
+                colPos = 0
+              }
             }
+          }
+          2 {
+            columns {
+              1 {
+                name = Main Content
+                colPos = 1
+              }
+              2 {
+                name = Sidebar
+                colPos = 2
+              }
+            }
+          }
         }
+      }
     }
+  }
 }
