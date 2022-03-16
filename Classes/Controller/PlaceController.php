@@ -78,7 +78,7 @@ class PlaceController extends AbstractController
                 'type' => 'Feature',
                 'geometry' => [
                     'type' => 'Point',
-                    'coordinates' => [$place->getLon(), $place->getLat()],
+                    'coordinates' => [(float)$place->getLon(), (float)$place->getLat()],
                 ],
                 'properties' => [
                     'name' => $place->getPlace(),
