@@ -35,7 +35,17 @@ namespace Slub\SlubWebAddressbooks\Controller;
 class PersonController extends AbstractController
 {
 
-	/**
+    /**
+     * @var \TYPO3\CMS\Extbase\Mvc\View\JsonView
+     */
+    protected $view;
+
+    /**
+     * @var string
+     */
+    protected $defaultViewObjectName = \TYPO3\CMS\Extbase\Mvc\View\JsonView::class;
+
+    /**
 	 * action ajax
 	 *
 	 * @return JSON array of year strings
@@ -55,10 +65,12 @@ class PersonController extends AbstractController
 			}
 		}
 
-		if (is_array($selectOptions))
+		if (is_array($selectOptions)) {
 			return json_encode(array_unique($selectOptions));
-		else
+        }
+		else {
 			return '';
+        }
 	}
 
 }

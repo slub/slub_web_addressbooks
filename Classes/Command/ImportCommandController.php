@@ -284,41 +284,32 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
                     continue;
                 }
 
-                // Get all logical units at top level.
-                $divs = $mets->xpath('./mets:structMap[@TYPE="LOGICAL"]//mets:div');
-
-                $smLinks = $this->getSmLinks($mets);
-
-                $toc = [];
-                foreach ($divs as $div) {
-                    if ((string)$div['LABEL']) {
-                        $toc[(string)$div['LABEL']] = $smLinks[(string)$div['ID']];
-                    }
-                }
+                // get table of contents from METS structure
+                $toc = $this->getTableOfContents($mets);
 
                 $toc = $this->normalizeToc($toc);
 
-              $linkMap = $this->bookRepository->getLinkToMap($bookPpn);
+                $linkMap = $this->getLinkToMap($mets, $bookPpn);
 
-              if (!empty($linkMap['thumb'])) {
-                $bookObj->setLinkMapThumb($linkMap['thumb']);
-              }
-              if (!empty($linkMap['map'])) {
-                $bookObj->setLinkMap($linkMap['map']);
-              }
+                if (!empty($linkMap['thumb'])) {
+                    $bookObj->setLinkMapThumb($linkMap['thumb']);
+                }
+                if (!empty($linkMap['map'])) {
+                    $bookObj->setLinkMap($linkMap['map']);
+                }
 
-            if (!empty($toc['Behördenverzeichnis'])) {
+                if (!empty($toc['Behördenverzeichnis'])) {
           			$bookObj->setPageBehoerdenverzeichnis($toc['Behördenverzeichnis']);
-              }
+                }
           		if (!empty($toc['BerufsklassenGewerbeverzeichnis'])) {
           			$bookObj->setPageBerufsklassenUndGewerbe($toc['BerufsklassenGewerbeverzeichnis']);
-              }
+                }
           		if (!empty($toc['Handelsregister'])) {
           			$bookObj->setPageHandelsregister($toc['Handelsregister']);
-              }
+                }
           		if (!empty($toc['Genossenschaftsregister'])) {
           			$bookObj->setPageGenossenschaftsregister($toc['Genossenschaftsregister']);
-              }
+                }
 
             } else {
 
@@ -456,7 +447,6 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
             'omitHeader' => 'true'
         ];
         $response = $requestFactory->request('http://sdvsolrslub.slub-dresden.de:8983/solr/dlfCore0/select?', 'POST', $configuration);
-//        $response = $requestFactory->request($this->settings['solr']['host'] . '/select?', 'POST', $configuration);
         $content  = $response->getBody()->getContents();
         $result = json_decode($content, true);
         if ($result) {
@@ -488,12 +478,21 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
         return $xml;
     }
 
-    /**
+	/**
+	 * Get Table of Contents from METS structure
+	 *
      * @param simplexml $mets
-     */
-    protected function getSmLinks($mets)
+	 * @return $array
+	 */
+	protected function getTableOfContents($mets)
     {
+
+        // Get all logical units at top level.
+        $divs = $mets->xpath('./mets:structMap[@TYPE="LOGICAL"]//mets:div');
+
+        // Get structLinks (relation physical to logical IDs)
         $smLinks = $mets->xpath('./mets:structLink/mets:smLink');
+
         if (!empty($smLinks)) {
             foreach ($smLinks as $smLink) {
                 $foundSmLinks['l2p'][(string) $smLink->attributes('http://www.w3.org/1999/xlink')->from][] = (string) $smLink->attributes('http://www.w3.org/1999/xlink')->to;
@@ -501,64 +500,133 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
             }
         }
 
+        // Get physical structure
         $physicalPages = $mets->xpath('./mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div[@TYPE="page"]');
         $log2Page = [];
         foreach ($physicalPages as $physPage) {
             $foundPhysPages[(string)$physPage['ID']] = (string)$physPage['ORDER'];
         }
 
-        foreach ( $foundSmLinks['l2p'] as $index => $log) {
+        // Make a simple, unique array logical ID -> physical page number
+        foreach ($foundSmLinks['l2p'] as $index => $log) {
             if (empty($log2Page[$index])) {
                 $log2Page[$index] = $foundPhysPages[$log[0]];
             }
         }
 
-        return $log2Page;
+        // Make the table of contents: LABEL -> physical page number
+        $toc = [];
+        foreach ($divs as $div) {
+            if ((string)$div['LABEL']) {
+                $toc[(string)$div['LABEL']] = $log2Page[(string)$div['ID']];
+            }
+        }
     }
 
 
 	/**
-	 * normalizeToc
+	 * Normalize table of contents and find entries for different writing of "Behördenverzeichnis" ec.
 	 *
 	 * @param $array
 	 * @return $array
 	 */
 	protected function normalizeToc($toc)
     {
-
         $nToc = [];
-		foreach ($toc as $label => $page) {
 
-				if (strpos($label, 'Behördenverzeichnis') !== false
-					&& empty($nToc['Behördenverzeichnis'])
-				) {
+        foreach ($toc as $label => $page) {
 
-					$nToc['Behördenverzeichnis'] = $page;
-
-				} elseif ($label == "Berufsklassen und Gewerbebetriebe" ||
-					(strpos($label, 'Berufsklassen') !== false && strpos($label, 'Gewerbe') !== false
-						&& empty($nToc['BerufsklassenGewerbeverzeichnis']))
-				) {
-
-					$nToc['BerufsklassenGewerbeverzeichnis'] = $page;
-
-				} elseif (strpos($label, 'Handelsregister') !== false
-					&& empty($nToc['Handelsregister'])
-				) {
-
-					$nToc['Handelsregister'] = $page;
-
-				} elseif (strpos($label, 'Genossenschaftsregister') !== false
-					&& empty($nToc['Genossenschaftsregister'])
-				) {
-
-					$nToc['Genossenschaftsregister'] = $page;
-
-				}
+            if (strpos($label, 'Behördenverzeichnis') !== false
+                && empty($nToc['Behördenverzeichnis'])
+            ) {
+                $nToc['Behördenverzeichnis'] = $page;
+            } elseif ($label == "Berufsklassen und Gewerbebetriebe" ||
+                (strpos($label, 'Berufsklassen') !== false && strpos($label, 'Gewerbe') !== false
+                    && empty($nToc['BerufsklassenGewerbeverzeichnis']))
+            ) {
+                $nToc['BerufsklassenGewerbeverzeichnis'] = $page;
+            } elseif (strpos($label, 'Handelsregister') !== false
+                && empty($nToc['Handelsregister'])
+            ) {
+                $nToc['Handelsregister'] = $page;
+            } elseif (strpos($label, 'Genossenschaftsregister') !== false
+                && empty($nToc['Genossenschaftsregister'])
+            ) {
+                $nToc['Genossenschaftsregister'] = $page;
+            }
         }
 
 		return $nToc;
 	}
 
+	/**
+	 * fetch link to Map from METS/MODS and Fotothek
+	 *
+     * @param simplexml $mets
+	 * @param string $bookPpn
+	 * @return string
+	 */
+	protected function getLinkToMap($mets, $bookPpn)
+    {
+
+        $mets->registerXPathNamespace('mets', 'http://www.loc.gov/METS/');
+        $mets->registerXPathNamespace('mods', 'http://www.loc.gov/mods/v3');
+        $mets->registerXPathNamespace('slub', 'http://slub-dresden.de/');
+
+        $slubTarget = $mets->xpath('./mets:dmdSec[@ID="DMDLOG_0001"]/mets:mdWrap[@MDTYPE="MODS"]/mets:xmlData/mods:mods/mods:extension/slub:slub/slub:link/slub:target');
+
+		$linkMap = array('thumb' => '', 'map' => '');
+
+		if (is_array($slubTarget) && stripos((string)$slubTarget[0], 'fotothek') !== false) {
+
+			// fetch the preview from fotothek
+			$linkMap['thumb'] = $this->getMapThumb((string)$slubTarget[0]);
+
+			// get basename of thumbnail image without suffix
+			$baseNameImage = basename($linkMap['thumb'], '.jpg');
+
+			// compose fotothek url...
+			if (!empty($baseNameImage)) {
+
+				$linkMap['map'] = 'http://www.deutschefotothek.de/db/apsisa.dll/ete?action=queryZoom/1&index=freitext&desc=' . $baseNameImage . '&medium=' . $baseNameImage;
+
+			}
+
+		}
+
+		return $linkMap;
+
+	}
+
+    /**
+	 * Get the url of thumb-map
+	 *
+	 * @param $url
+	 * @return string
+	 */
+	protected function getMapThumb($url)
+    {
+
+		$p = xml_parser_create();
+
+		$parseret = xml_parse_into_struct($p, @file_get_contents($url), $vals);
+
+		xml_parser_free($p);
+
+		foreach ($vals as $id => $value) {
+			// the thumb images have always the "onerror" tag set...
+			if ($value['tag'] == 'IMG' && !empty($value['attributes']['ONERROR'])) {
+				if (preg_match('/\.jpg$/', $value['attributes']['SRC'])) {
+					$getHeaders = get_headers($value['attributes']['SRC'], 1);
+					if (strstr($getHeaders[0], '200') !== false) {
+						$thumb = $value['attributes']['SRC'];
+						break; // we take the first one...
+					}
+				}
+			}
+		}
+
+		return $thumb;
+	}
 
 }
