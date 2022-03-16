@@ -54,7 +54,6 @@ class Book extends AbstractEntity
 	 */
 	protected $streets;
 
-
 	/**
 	 * Year as String
 	 *

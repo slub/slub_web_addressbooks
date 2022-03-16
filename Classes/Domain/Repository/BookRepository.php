@@ -95,29 +95,6 @@ class BookRepository extends Repository
 
 
 	/**
-	 * Check if given ppn is valid in tx_dlf_documents
-	 *
-	 * @param $ppn
-	 * @return boolean
-	 */
-	public function getDlfUid($ppn)
-    {
-
-		$query = $this->createQuery();
-
-		$buildquery = 'SELECT uid FROM tx_dlf_documents ';
-		$buildquery .= 'WHERE purl = \'http://digital.slub-dresden.de/id' . $ppn . '\' ';
-		$buildquery .= 'AND deleted = \'0\' ';
-		$buildquery .= 'AND hidden = \'0\' ';
-
-		$query->statement($buildquery);
-
-		$result = $query->execute(TRUE);
-
-		return $result[0];
-	}
-
-	/**
 	 * fetch link to Map from METS/MODS and Fotothek
 	 *
 	 * @param string $bookPpn
@@ -155,76 +132,6 @@ class BookRepository extends Repository
 
 		return $linkMap;
 
-	}
-
-	/**
-	 * fetch link to Behoerdenverzeichnis etc. from METS/MODS
-	 *
-	 * @param string $bookPpn
-	 * @return array
-	 */
-	public function getLinkToc($bookPpn)
-    {
-
-		$toc = $this->searchLabels($doc->tableOfContents, $vals);
-
-		\tx_dlf_document::clearRegistry();
-
-		return $toc;
-
-	}
-
-	// recursive search for key in nested array
-	// returns: array with "values" for the searched "key"
-
-	/**
-	 * searchLabels
-	 *
-	 * @param $array
-	 * @param $vals
-	 * @return
-	 */
-	public function searchLabels($array, &$vals)
-    {
-
-		foreach ($array as $key => $value) {
-
-			if (is_array($value)) {
-
-				$this->searchLabels($value, $vals);
-
-			} else if ($key == 'label' && !empty($value) && \TYPO3\CMS\Core\Utility\MathUtility::canBeInterpretedAsInteger($array['points'])) {
-
-				if (strpos($value, 'Behördenverzeichnis') !== false
-					&& empty($vals['Behördenverzeichnis'])
-				) {
-
-					$vals['Behördenverzeichnis'] = $array['points'];
-
-				} elseif ($value == "Berufsklassen und Gewerbebetriebe" ||
-					(strpos($value, 'Berufsklassen') !== false && strpos($value, 'Gewerbe') !== false
-						&& empty($vals['BerufsklassenGewerbeverzeichnis']))
-				) {
-
-					$vals['BerufsklassenGewerbeverzeichnis'] = $array['points'];
-
-				} elseif (strpos($value, 'Handelsregister') !== false
-					&& empty($vals['Handelsregister'])
-				) {
-
-					$vals['Handelsregister'] = $array['points'];
-
-				} elseif (strpos($value, 'Genossenschaftsregister') !== false
-					&& empty($vals['Genossenschaftsregister'])
-				) {
-
-					$vals['Genossenschaftsregister'] = $array['points'];
-
-				}
-			}
-		}
-
-		return $vals;
 	}
 
 	/**

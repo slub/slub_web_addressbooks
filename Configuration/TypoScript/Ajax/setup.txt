@@ -18,7 +18,11 @@ ajaxAddressbooksPersons {
   }
   config {
     disableAllHeaderCode = 1
-    additionalHeaders = Content-type:application/json
+    additionalHeaders {
+        10 {
+            header = Content-type:application/json; charset=utf-8
+        }
+    }
     xhtml_cleaning = 0
     admPanel = 0
     debug = 0
@@ -47,7 +51,7 @@ jsonAddressbooksPlace {
   }
   config {
     disableAllHeaderCode = 1
-    disableCharsetHeader = 1
+#    disableCharsetHeader = 1
     additionalHeaders {
         10 {
             header = Content-type:application/vnd.geo+json
