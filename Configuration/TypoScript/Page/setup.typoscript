@@ -105,6 +105,13 @@ page {
 				7341.value = guidedSearch searchResults lists
 			}
 		}
+    settings {
+      matomo {
+          hostname = {$plugin.tx_slubwebaddressbooks.matomo.hostname}
+          siteId = {$plugin.tx_slubwebaddressbooks.matomo.siteId}
+          setDomains = {$plugin.tx_slubwebaddressbooks.matomo.setDomains}
+      }
+    }
 	}
 }
 
