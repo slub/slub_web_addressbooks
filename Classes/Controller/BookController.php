@@ -115,14 +115,6 @@ class BookController extends AbstractController
 				$this->view->assign('LinkMapThumb', $book->getLinkMapThumb());
 				$this->view->assign('pageHovLink', $place->getHovLink());
 
-				// fill registers to be used in ts (--> opengraph tags)
-				$cObj = GeneralUtility::makeInstance('TYPO3\\CMS\\Frontend\\ContentObject\\ContentObjectRenderer');
-				$cObj->LOAD_REGISTER(
-					array(
-						'addressBookTitle' => LocalizationUtility::translate('tx_slubwebaddressbooks_domain_model_book.meta_page_title', 'slub_web_addressbooks', $arguments=NULL) . ' ' . $place->getPlace() . ' ' . $book->getYearString(),
-						'addressBookDescription' => 'Description ... TBD'
-					), 'LOAD_REGISTER');
-
 				$streets = $book->getStreets(); // $this->streetRepository->findByBookId($book);
 
 				$this->view->assign('streets', $streets);

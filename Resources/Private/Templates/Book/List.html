@@ -24,27 +24,27 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <f:render partial="Book/Search" arguments="{yearFirst: yearFirst, yearCurrent: yearCurrent, yearPrevious: yearPrevious, yearNext: yearNext, yearLast: yearLast, place : place, SearchString : searchName, bookPersons: bookPersons, bookStreets: bookStreets, pageHovLink: pageHovLink, pageBehoerdenverzeichnis: pageBehoerdenverzeichnis, PageBerufsklassenUndGewerbe: PageBerufsklassenUndGewerbe, PageHandelsregister: PageHandelsregister, PageGenossenschaftsregister: PageGenossenschaftsregister}" />
 
-
-
 <div class="list listPersons">
 <h3><f:translate key="tx_slubwebaddressbooks_domain_model_person.name"></f:translate></h3>
 <p class="listIntro"><f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_list_of_person_names'></f:translate></p>
-<ul>
-<f:groupedFor each="{persons}" as="person" groupBy="name">
-	<f:for each="{person}" as="str" key="name" iteration="iterator">
-		<f:if condition="{iterator.isLast}">
-			<f:if condition="{str.image}">
-					<f:then>
-						<li><f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{str.image}" target="_blank">{str.name}</f:link.external></li>
-					</f:then>
-					<f:else>
-						<li>{str.name}</li>
-					</f:else>
-			</f:if>
-		</f:if>
-	</f:for>
-</f:groupedFor>
-</ul>
+<f:if condition="{persons}">
+    <ul>
+        <f:groupedFor each="{persons}" as="person" groupBy="name">
+            <f:for each="{person}" as="str" key="name" iteration="iterator">
+                <f:if condition="{iterator.isLast}">
+                    <f:if condition="{str.image}">
+                            <f:then>
+                                <li><f:link.external uri="https://digital.slub-dresden.de/id{bookPersons.ppn}/{str.image}" target="_blank">{str.name}</f:link.external></li>
+                            </f:then>
+                            <f:else>
+                                <li>{str.name}</li>
+                            </f:else>
+                    </f:if>
+                </f:if>
+            </f:for>
+        </f:groupedFor>
+    </ul>
+</f:if>
 
 </div>
 
@@ -64,26 +64,28 @@ Otherwise your changes will be overwritten the next time you save the extension 
 </div>
 </f:then></f:if>
 <p class="listIntro"><f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_list_of_street_names'></f:translate></p>
-<ul>
-<f:groupedFor each="{streets}" as="street" groupBy="name">
-	<f:for each="{street}" as="str" key="name" iteration="iterator">
-		<f:if condition="{iterator.isFirst}">
-			<f:if condition="{str.image}">
-					<f:then>
-						<li><f:link.external uri="http://digital.slub-dresden.de/id{bookStreets.ppn}/{str.image}" target="_blank">{str.name}</f:link.external>
-						<f:if condition="<f:count subject='{streets}' /> > 1"><f:then>
-						<f:link.external class="dfLink" uri="http://www.deutschefotothek.de/db/apsisa.dll/ete?action=queryGallery&index=freitext&desc={place.place}+{str.name}" target="_blank"><span class="hoverFeedback">...passende Bilder in der Deutschen Fotothek anzeigen</span></f:link.external>
-						</f:then></f:if>
-						</li>
-					</f:then>
-					<f:else>
-						<li>{str.name}</li>
-					</f:else>
-			</f:if>
-		</f:if>
-	</f:for>
-</f:groupedFor>
-</ul>
+<f:if condition="{streets}">
+    <ul>
+        <f:groupedFor each="{streets}" as="street" groupBy="name">
+            <f:for each="{street}" as="str" key="name" iteration="iterator">
+                <f:if condition="{iterator.isFirst}">
+                    <f:if condition="{str.image}">
+                            <f:then>
+                                <li><f:link.external uri="https://digital.slub-dresden.de/id{bookStreets.ppn}/{str.image}" target="_blank">{str.name}</f:link.external>
+                                <f:if condition="<f:count subject='{streets}' /> > 1"><f:then>
+                                <f:link.external class="dfLink" uri="http://www.deutschefotothek.de/db/apsisa.dll/ete?action=queryGallery&index=freitext&desc={place.place}+{str.name}" target="_blank"><span class="hoverFeedback">...passende Bilder in der Deutschen Fotothek anzeigen</span></f:link.external>
+                                </f:then></f:if>
+                                </li>
+                            </f:then>
+                            <f:else>
+                                <li>{str.name}</li>
+                            </f:else>
+                    </f:if>
+                </f:if>
+            </f:for>
+        </f:groupedFor>
+    </ul>
+</f:if>
 
 </div>
 
