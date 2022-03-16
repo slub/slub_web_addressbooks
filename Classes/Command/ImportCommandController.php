@@ -25,6 +25,7 @@ namespace Slub\SlubWebAddressbooks\Command;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 
+use TYPO3\CMS\Core\Http\RequestFactory;
 use TYPO3\CMS\Core\Resource\ProcessedFileRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -86,6 +87,13 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
     {
         $this->configurationManager = $configurationManager;
     }
+
+    /**
+	 * location URL of the METS file
+	 *
+	 * @var string
+	 */
+	protected $location;
 
     /**
      * Init some settings like storagePid
@@ -265,9 +273,30 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 
             $bookObj->setOrderIJ((string)$currentSheet->getCell('F2'));
 
-            $isAvailable = $this->bookRepository->getBookPurl((string)$currentSheet->getCell('D2'))['is_available'];
+            // try to get the location URL from Solr for given PPN
+            $is_available = $this->getLocationFromPpn($bookPpn);
 
-            if ($isAvailable == '1') {
+            if ($is_available !== false) {
+
+                $mets = $this->getMets($this->location);
+
+                if ($mets === false) {
+                    continue;
+                }
+
+                // Get all logical units at top level.
+                $divs = $mets->xpath('./mets:structMap[@TYPE="LOGICAL"]//mets:div');
+
+                $smLinks = $this->getSmLinks($mets);
+
+                $toc = [];
+                foreach ($divs as $div) {
+                    if ((string)$div['LABEL']) {
+                        $toc[(string)$div['LABEL']] = $smLinks[(string)$div['ID']];
+                    }
+                }
+
+                $toc = $this->normalizeToc($toc);
 
               $linkMap = $this->bookRepository->getLinkToMap($bookPpn);
 
@@ -278,9 +307,7 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
                 $bookObj->setLinkMap($linkMap['map']);
               }
 
-              $toc = $this->bookRepository->getLinkToc($bookPpn);
-
-          		if (!empty($toc['Behördenverzeichnis'])) {
+            if (!empty($toc['Behördenverzeichnis'])) {
           			$bookObj->setPageBehoerdenverzeichnis($toc['Behördenverzeichnis']);
               }
           		if (!empty($toc['BerufsklassenGewerbeverzeichnis'])) {
@@ -295,11 +322,10 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 
             } else {
 
-              unset($bookObj);
-              echo $sheetName . " (nicht verfügbar), ";
+                unset($bookObj);
+                echo $sheetName . " (nicht verfügbar), ";
 
-              continue;
-
+                continue;
             }
 
             $allNames = array();
@@ -393,5 +419,138 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
         $persistenceManager->persistAll();
 
     }
+
+    /**
+     * Get the location URL of the METS file for the given PPN
+     * @param string ppn
+     * @return boolean
+     */
+    protected function getLocationFromPpn($Ppn)
+    {
+        $location = '';
+        /** @var RequestFactory $requestFactory */
+        $requestFactory = GeneralUtility::makeInstance(RequestFactory::class);
+        $configuration = [
+            'timeout' => 10,
+//            'timeout' => $this->settings['solr']['timeout'],
+            'headers' => [
+                'Content-type' => 'application/x-www-form-urlencoded',
+                'Accept' => 'application/json'
+            ],
+        ];
+        $configuration['form_params'] = [
+            'q' => 'record_id:"oai:de:slub-dresden:db:id-' . $Ppn . '"',
+            'fq' => 'toplevel:true',
+            'fl' => 'location',
+            'rows' => 1,
+            'wt' => 'json',
+            'json.nl' => 'flat',
+            'omitHeader' => 'true'
+        ];
+        $response = $requestFactory->request('http://sdvsolrslub.slub-dresden.de:8983/solr/dlfCore0/select?', 'POST', $configuration);
+//        $response = $requestFactory->request($this->settings['solr']['host'] . '/select?', 'POST', $configuration);
+        $content  = $response->getBody()->getContents();
+        $result = json_decode($content, true);
+        if ($result) {
+            foreach ($result['response']['docs'] as $doc) {
+                $location = $doc['location'];
+            }
+        }
+
+        if ($location) {
+            $this->location = $location;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * @param string $location
+     * @return string|boolean METS file
+     */
+    private function getMets($location)
+    {
+        $content = GeneralUtility::getUrl($location);
+        if ($content !== false) {
+            $xml = simplexml_load_string($content);
+        } else {
+            return false;
+        }
+        return $xml;
+    }
+
+    /**
+     * @param simplexml $mets
+     */
+    protected function getSmLinks($mets)
+    {
+        $smLinks = $mets->xpath('./mets:structLink/mets:smLink');
+        if (!empty($smLinks)) {
+            foreach ($smLinks as $smLink) {
+                $foundSmLinks['l2p'][(string) $smLink->attributes('http://www.w3.org/1999/xlink')->from][] = (string) $smLink->attributes('http://www.w3.org/1999/xlink')->to;
+                $foundSmLinks['p2l'][(string) $smLink->attributes('http://www.w3.org/1999/xlink')->to][] = (string) $smLink->attributes('http://www.w3.org/1999/xlink')->from;
+            }
+        }
+
+        $physicalPages = $mets->xpath('./mets:structMap[@TYPE="PHYSICAL"]/mets:div/mets:div[@TYPE="page"]');
+        $log2Page = [];
+        foreach ($physicalPages as $physPage) {
+            $foundPhysPages[(string)$physPage['ID']] = (string)$physPage['ORDER'];
+        }
+
+        foreach ( $foundSmLinks['l2p'] as $index => $log) {
+            if (empty($log2Page[$index])) {
+                $log2Page[$index] = $foundPhysPages[$log[0]];
+            }
+        }
+
+        return $log2Page;
+    }
+
+
+	/**
+	 * normalizeToc
+	 *
+	 * @param $array
+	 * @return $array
+	 */
+	protected function normalizeToc($toc)
+    {
+
+        $nToc = [];
+		foreach ($toc as $label => $page) {
+
+				if (strpos($label, 'Behördenverzeichnis') !== false
+					&& empty($nToc['Behördenverzeichnis'])
+				) {
+
+					$nToc['Behördenverzeichnis'] = $page;
+
+				} elseif ($label == "Berufsklassen und Gewerbebetriebe" ||
+					(strpos($label, 'Berufsklassen') !== false && strpos($label, 'Gewerbe') !== false
+						&& empty($nToc['BerufsklassenGewerbeverzeichnis']))
+				) {
+
+					$nToc['BerufsklassenGewerbeverzeichnis'] = $page;
+
+				} elseif (strpos($label, 'Handelsregister') !== false
+					&& empty($nToc['Handelsregister'])
+				) {
+
+					$nToc['Handelsregister'] = $page;
+
+				} elseif (strpos($label, 'Genossenschaftsregister') !== false
+					&& empty($nToc['Genossenschaftsregister'])
+				) {
+
+					$nToc['Genossenschaftsregister'] = $page;
+
+				}
+        }
+
+		return $nToc;
+	}
+
 
 }

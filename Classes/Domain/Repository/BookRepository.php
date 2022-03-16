@@ -1,8 +1,6 @@
 <?php
 namespace Slub\SlubWebAddressbooks\Domain\Repository;
 
-use \TYPO3\CMS\Extbase\Persistence\Repository;
-
 /***************************************************************
  *  Copyright notice
  *
@@ -26,6 +24,9 @@ use \TYPO3\CMS\Extbase\Persistence\Repository;
  *
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
+
+use TYPO3\CMS\Extbase\Persistence\Repository;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  *
@@ -99,29 +100,6 @@ class BookRepository extends Repository
 	 * @param $ppn
 	 * @return boolean
 	 */
-	public function getBookPurl($ppn)
-    {
-
-		$query = $this->createQuery();
-
-		$buildquery = 'SELECT COUNT(purl) AS is_available, uid AS dlfuid, location FROM tx_dlf_documents ';
-		$buildquery .= 'WHERE purl = \'http://digital.slub-dresden.de/id' . $ppn . '\' ';
-		$buildquery .= 'AND deleted = \'0\' ';
-		$buildquery .= 'AND hidden = \'0\' ';
-
-		$query->statement($buildquery);
-
-		$result = $query->execute(TRUE);
-
-		return $result[0];
-	}
-
-	/**
-	 * Check if given ppn is valid in tx_dlf_documents
-	 *
-	 * @param $ppn
-	 * @return boolean
-	 */
 	public function getDlfUid($ppn)
     {
 
@@ -147,6 +125,8 @@ class BookRepository extends Repository
 	 */
 	public function getLinkToMap($bookPpn)
     {
+
+        return;
 
 		$doc = $this->initDlf($bookPpn);
 
@@ -186,33 +166,11 @@ class BookRepository extends Repository
 	public function getLinkToc($bookPpn)
     {
 
-		$doc = $this->initDlf($bookPpn);
-
 		$toc = $this->searchLabels($doc->tableOfContents, $vals);
 
 		\tx_dlf_document::clearRegistry();
 
 		return $toc;
-
-	}
-
-	/**
-	 *
-	 * @param string $bookPpn
-	 * @return boolean
-	 */
-	private function initDlf($bookPpn)
-    {
-
-		$dlfdocument = $this->getDlfUid($bookPpn);
-
-		if (isset($dlfdocument['uid'])) {
-			$doc = \tx_dlf_document::getInstance($dlfdocument['uid']);
-		} else {
-			$doc = FALSE;
-		}
-
-		return $doc;
 
 	}
 

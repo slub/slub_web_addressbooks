@@ -8,7 +8,14 @@ plugin.tx_slubwebaddressbooks {
 		storagePid = {$plugin.tx_slubwebaddressbooks.persistence.storagePid}
 	}
 	features {
+
 	}
+  settings {
+    solr {
+        host = {$config.kitodo.solr.host}/{$config.kitodo.solr.coreName}
+        timeout = {$config.kitodo.solr.timeout}
+    }
+  }
 }
 # Configuration
 <INCLUDE_TYPOSCRIPT: source="DIR:EXT:slub_web_addressbooks/Configuration/TypoScript/Config">

@@ -22,4 +22,24 @@ plugin.tx_slubwebaddressbooks {
 		# cat=plugin.tx_slubwebaddressbooks/links/0140; type=int+; label=Default storage PID
 		storagePid =
 	}
+
+  kitodo {
+      # basic solr config
+      solr {
+          # cat=plugin.tx_slubwebaddressbooks/links/0200; type=int+; label= solr core uid
+          core = 1
+
+          # cat=plugin.tx_slubwebaddressbooks/links/0201; type=int+; label= solr search query limit
+          searchLimit = 1000
+
+          # cat=plugin.tx_slubwebaddressbooks/links/0202; type=string; label= solr url including scheme, port and path
+          host = http://sdvsolrslub.slub-dresden.de:8983/solr
+
+          # cat=plugin.tx_slubwebaddressbooks/links/0203; type=string; label= solr core name
+          coreName = dlfCore0
+
+          # cat=plugin.tx_slubwebaddressbooks/links/0204; type=int+; label= solr connection timeout (s)
+          timeout = 5
+      }
+  }
 }

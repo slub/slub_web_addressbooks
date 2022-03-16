@@ -144,6 +144,7 @@ return array(
 						'cols'    => 40,
 						'rows'    => 40,
 						'eval'    => 'trim',
+                        'default' => ''
 				],
 		],
 		'streets' => [
@@ -154,6 +155,7 @@ return array(
 						'cols'    => 40,
 						'rows'    => 40,
 						'eval'    => 'trim',
+                        'default' => ''
 				],
 		],
 		'page_behoerdenverzeichnis' => array(
