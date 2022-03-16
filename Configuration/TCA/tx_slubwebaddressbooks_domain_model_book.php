@@ -35,38 +35,36 @@ return array(
                 'default' => 0,
             ],
         ],
-		'starttime' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
-			'config' => array(
-				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
-				'eval' => 'datetime',
-				'checkbox' => 0,
-				'default' => 0,
-				'range' => array(
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'endtime' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
-			'config' => array(
-				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
-				'eval' => 'datetime',
-				'checkbox' => 0,
-				'default' => 0,
-				'range' => array(
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
+        'starttime'                => [
+            'exclude'   => 1,
+            'l10n_mode' => 'exclude',
+            'label'     => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'config'    => [
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true
+                ],
+                'type'     => 'input',
+                'renderType' => 'inputDateTime',
+                'size'     => 13,
+                'eval'     => 'datetime',
+                'default'  => 0,
+            ],
+        ],
+        'endtime'                  => [
+            'exclude'   => 1,
+            'l10n_mode' => 'exclude',
+            'label'     => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'config'    => [
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true
+                ],
+                'type'     => 'input',
+                'renderType' => 'inputDateTime',
+                'size'     => 13,
+                'eval'     => 'datetime',
+                'default'  => 0,
+            ],
+        ],
 		'year_string' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang_db.xlf:tx_slubwebaddressbooks_domain_model_book.year_string',
@@ -193,9 +191,11 @@ return array(
 			'label' => 'LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang_db.xlf:tx_slubwebaddressbooks_domain_model_book.place_id',
 			'config' => array(
 				'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
 				'foreign_table' => 'tx_slubwebaddressbooks_domain_model_place',
 				'minitems' => 0,
 				'maxitems' => 1,
+                'enableMultiSelectFilterTextfield' => true,
 			),
 		),
 	),

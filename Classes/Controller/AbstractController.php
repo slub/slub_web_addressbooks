@@ -70,45 +70,6 @@ class AbstractController extends ActionController
         $this->placeRepository = $placeRepository;
     }
 
-    /**
-	* @var \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface
-	*/
-	protected $configurationManager;
-
- 	/**
-	 * @var Content Object
-	 */
-	protected $contentObj;
-
-    /**
-	 * Target PID of form actions
-	 *
-	 * @var integer
-     * @Extbase\Validate("NotEmpty")
-	 */
-	protected $actionPid;
-
-	/**
-	 * injectConfigurationManager
-	 *
-	 * we overwrite the injectConfigurationManager from extbase:Classes/MVC/Controller/AbstractController.php
-	 *
-	 * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-	 * @return void
-	 */
-	public function injectConfigurationManager(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager)
-    {
-		$this->configurationManager = $configurationManager;
-		$this->contentObj = $this->configurationManager->getContentObject();
-		$this->settings = $this->configurationManager->getConfiguration(\TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface::CONFIGURATION_TYPE_SETTINGS);
-
-		if (!empty($this->settings['pidTimeline']))
-				$this->actionPid = $this->settings['pidTimeline'];
-			else {
-				$this->actionPid = $this->contentObj->data['pid'];
-		}
-	}
-
 	/**
 	 * helper function to translate traditional sorting
 	 *

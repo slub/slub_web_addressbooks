@@ -34,8 +34,7 @@ namespace Slub\SlubWebAddressbooks\Controller;
  */
 class PlaceController extends AbstractController
 {
-
-	/**
+    /**
 	 * action list
 	 * This is the map view
 	 *
@@ -56,10 +55,37 @@ class PlaceController extends AbstractController
 	public function geojsonAction()
     {
 
-		$this->request->setFormat('json');
+		$this->request->setFormat('html');
 
 		$places = $this->placeRepository->findAll();
-		$this->view->assign('places', $places);
-	}
 
+        $geoJson = [
+            'type' => 'FeatureCollection'
+        ];
+        foreach ($places as $place) {
+            $uri = $this->uriBuilder
+                ->reset()
+                ->setTargetPageUid($this->settings['pidTimeline'])
+                ->setCreateAbsoluteUri(true)
+                ->setArguments([
+                    'tx_slubwebaddressbooks_booksearch[controller]' => 'Book',
+                    'tx_slubwebaddressbooks_booksearch[action]' => 'timeline',
+                    'tx_slubwebaddressbooks_booksearch[placeId]' => $place->getUid(),
+                    ])
+                ->build();
+
+            $geoJson['features'][] = [
+                'type' => 'Feature',
+                'geometry' => [
+                    'type' => 'Point',
+                    'coordinates' => [$place->getLon(), $place->getLat()],
+                ],
+                'properties' => [
+                    'name' => $place->getPlace(),
+                    'url' => $uri
+                ]
+            ];
+        }
+		$this->view->assign('geoJson', $geoJson);
+	}
 }

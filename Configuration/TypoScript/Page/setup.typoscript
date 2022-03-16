@@ -45,19 +45,11 @@ page {
     script = EXT:slub_web_addressbooks/Resources/Public/Js/script.js
     jqueryscroll = EXT:slub_web_addressbooks/Resources/Public/Js/jquery.horizontal.scroll.min.js
   }
+
   includeJSLibs {
       jQuery = EXT:slub_web_addressbooks/Resources/Public/Js/jquery-3.6.0.min.js
-      jQuery {
-          external = 1
-          disableCompression = 1
-          integrity = sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=
-          excludeFromConcatenation = 1
-          allWrap = |<script type="text/javascript">if (typeof jQuery == 'undefined') { document.write(unescape("%3Cscript src='typo3conf/ext/slub_web_addressbooks/Resources/Public/Js/jquery-2.2.4.min.js' type='text/javascript'%3E%3C/script%3E"));}</script>
-      }
+      jQuery.forceOnTop = 1
       openlayers = EXT:slub_web_addressbooks/Resources/Public/Js/OpenLayers/ol.js
-  }
-  includeJSFooterlibs {
-      #jqueryUiMouseSlider = EXT:slub_web_ldp/Resources/Public/Javascript/jquery-ui-mouse-slider.js
   }
 
   10 = FLUIDTEMPLATE

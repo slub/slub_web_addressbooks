@@ -28,6 +28,7 @@ ajaxAddressbooksPersons {
 jsonAddressbooksPlace = PAGE
 jsonAddressbooksPlace {
   typeNum = 201712291
+#  10 =< tt_content.list.20.slubwebaddressbooks_placesearch
   10 = USER_INT
   10 {
     userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
@@ -41,15 +42,17 @@ jsonAddressbooksPlace {
       }
     }
     settings =< plugin.tx_slubwebaddressbooks.settings
-    settings.pidTimeline = 7184
+    settings.pidTimeline = 19
     persistence =< plugin.tx_slubwebaddressbooks.persistence
   }
   config {
     disableAllHeaderCode = 1
     disableCharsetHeader = 1
-    sendCacheHeaders = 1
-    cache_clearAtMidnight = 1
-    additionalHeaders = Content-type:application/vnd.geo+json
+    additionalHeaders {
+        10 {
+            header = Content-type:application/vnd.geo+json
+        }
+    }
     admPanel = 0
     debug = 0
   }

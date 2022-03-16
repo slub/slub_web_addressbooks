@@ -40,39 +40,37 @@ return array(
 		   'type' => 'passthrough',
 		  ]
 		],
-		'starttime' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.starttime',
-			'config' => array(
-				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
-				'eval' => 'datetime',
-				'checkbox' => 0,
-				'default' => 0,
-				'range' => array(
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'endtime' => array(
-			'exclude' => 1,
-			'l10n_mode' => 'mergeIfNotBlank',
-			'label' => 'LLL:EXT:lang/locallang_general.xlf:LGL.endtime',
-			'config' => array(
-				'type' => 'input',
-				'size' => 13,
-				'max' => 20,
-				'eval' => 'datetime',
-				'checkbox' => 0,
-				'default' => 0,
-				'range' => array(
-					'lower' => mktime(0, 0, 0, date('m'), date('d'), date('Y'))
-				),
-			),
-		),
-		'place' => array(
+        'starttime'                => [
+            'exclude'   => 1,
+            'l10n_mode' => 'exclude',
+            'label'     => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.starttime',
+            'config'    => [
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true
+                ],
+                'type'     => 'input',
+                'renderType' => 'inputDateTime',
+                'size'     => 13,
+                'eval'     => 'datetime',
+                'default'  => 0,
+            ],
+        ],
+        'endtime'                  => [
+            'exclude'   => 1,
+            'l10n_mode' => 'exclude',
+            'label'     => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.endtime',
+            'config'    => [
+                'behaviour' => [
+                    'allowLanguageSynchronization' => true
+                ],
+                'type'     => 'input',
+                'renderType' => 'inputDateTime',
+                'size'     => 13,
+                'eval'     => 'datetime',
+                'default'  => 0,
+            ],
+        ],
+    	'place' => array(
 			'exclude' => 0,
 			'label' => 'LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang_db.xlf:tx_slubwebaddressbooks_domain_model_place.place',
 			'config' => array(
