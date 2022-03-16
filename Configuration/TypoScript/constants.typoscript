@@ -26,9 +26,6 @@ plugin.tx_slubwebaddressbooks {
   kitodo {
       # basic solr config
       solr {
-          # cat=plugin.tx_slubwebaddressbooks/links/0200; type=int+; label= solr core uid
-          core = 1
-
           # cat=plugin.tx_slubwebaddressbooks/links/0201; type=int+; label= solr search query limit
           searchLimit = 1000
 

@@ -33,11 +33,6 @@ page {
     90.value(
         <link rel="apple-touch-icon" href="/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/touchicon.png" />
     )
-
-    200 = TEXT
-    200.value (
-      <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
-    )
   }
 
   includeCSS {
@@ -49,11 +44,9 @@ page {
     plugin = EXT:slub_web_addressbooks/Resources/Public/Js/plugins.js
     script = EXT:slub_web_addressbooks/Resources/Public/Js/script.js
     jqueryscroll = EXT:slub_web_addressbooks/Resources/Public/Js/jquery.horizontal.scroll.min.js
-    typekit = https://use.typekit.com/mjp2zwz.js
-    typo3.external = 1
   }
   includeJSLibs {
-      jQuery = //code.jquery.com/jquery-2.2.4.min.js
+      jQuery = EXT:slub_web_addressbooks/Resources/Public/Js/jquery-3.6.0.min.js
       jQuery {
           external = 1
           disableCompression = 1
