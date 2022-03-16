@@ -383,6 +383,14 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
             if ($update) {
               $this->bookRepository->update($bookObj);
             } else {
+                if (empty($bookObj->getStreets())) {
+                    // make sure, value is not empty
+                    $bookObj->setStreets('');
+                }
+                if (empty($bookObj->getPersons())) {
+                    // make sure, value is not empty
+                    $bookObj->setPersons('');
+                }
               $this->bookRepository->add($bookObj);
             }
 
