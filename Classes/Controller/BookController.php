@@ -7,7 +7,7 @@ use TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Alexander Bigga <alexander.bigga@slub-dresden.de>, SLUB Dresden
+ *  (c) 2012 Alexander Bigga <typo3@slub-dresden.de>, SLUB Dresden
  *
  *  All rights reserved
  *
