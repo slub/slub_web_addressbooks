@@ -6,8 +6,8 @@ TCEFORM {
         layout {
             removeItems = 3
             altLabels.0 = Standard (2 Spalten)
-            altLabels.1 = Startseiten und Tour Grid
-            altLabels.2 = Inhaltsseiten Grid
+            altLabels.1 = Startseite mit Intro Tour
+            altLabels.2 = Inhaltsseiten
         }
     }
     tt_content {
@@ -38,9 +38,6 @@ TCEFORM {
             disableNoMatchingValueElement = 1
             types {
                 text {
-                    disabled = 1
-                }
-                image_ldp_institutions {
                     disabled = 1
                 }
             }

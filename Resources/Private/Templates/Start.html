@@ -5,8 +5,7 @@
 <f:section name="Content">
 
   <f:format.raw>{content}</f:format.raw>
-
-  <section class="{guidedTour}">
+  <section class="guidedSearch {f:if(condition:'{pageLayout} == 1', then: 'intro', else: '')}">
     <div class="infoText">
         <f:cObject typoscriptObjectPath="lib.dynamicContent" data="1" />
     </div>

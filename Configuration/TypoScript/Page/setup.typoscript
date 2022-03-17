@@ -55,7 +55,7 @@ page {
 	  partialRootPath = EXT:slub_web_addressbooks/Resources/Private/Partials/
 
 		variables {
-			pageTitle = TEXT
+      pageTitle = TEXT
 			pageTitle.data = page:title
 
 			content < styles.content.get
@@ -73,26 +73,10 @@ page {
 			privacyPageId = TEXT
 			privacyPageId.value = {$plugin.tx_slubwebaddressbooks.privacyPid}
 
+      pageLayout = TEXT
+      pageLayout.data = TSFE:page|layout
 
-		    guidedTour = CASE
-		    guidedTour {
-				key.field = uid
-
-				default = TEXT
-				default.value = guidedSearch
-
-				# Einfuehrung
-				7187 = TEXT
-				7187.value = guidedSearch intro
-
-				# Ergebnisse
-				7185 = TEXT
-				7185.value = guidedSearch lists
-
-				7341 = TEXT
-				7341.value = guidedSearch searchResults lists
-			}
-		}
+    }
     settings {
       matomo {
           hostname = {$plugin.tx_slubwebaddressbooks.matomo.hostname}
