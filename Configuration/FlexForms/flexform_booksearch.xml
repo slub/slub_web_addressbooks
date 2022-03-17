@@ -23,11 +23,6 @@
              <numIndex index="1">Book->timeline</numIndex>
             </numIndex>
 
-            <numIndex index="1">
-             <numIndex index="0">Check DLF</numIndex>
-             <numIndex index="1">Book->checkdlf</numIndex>
-            </numIndex>
-
             <numIndex index="2">
              <numIndex index="0">Search Combinded</numIndex>
              <numIndex index="1">Book->searchcombined</numIndex>

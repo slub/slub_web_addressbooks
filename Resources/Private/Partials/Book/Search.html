@@ -1,13 +1,13 @@
 <div class="resultStatus">
 	<h3>
-	<f:if condition="{bookPersons.ppn}">
-		<f:then>
-			<f:link.external title="<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book'></f:translate> {place.place} {bookPersons.yearString}!" uri="http://digital.slub-dresden.de/id{bookPersons.ppn}" target="_blank">{place.place} {bookPersons.yearString}</f:link.external>
-		</f:then>
-		<f:else>
-			<f:link.external title="<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book'></f:translate> {place.place} {bookStreets.yearString}!" uri="http://digital.slub-dresden.de/id{bookStreets.ppn}" target="_blank">{place.place} {bookStreets.yearString}</f:link.external>
-		</f:else>
-	</f:if>
+        <f:if condition="{bookPersons.ppn}">
+            <f:then>
+                <f:link.external title="<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book'></f:translate> {place.place} {bookPersons.yearString}!" uri="http://digital.slub-dresden.de/id{bookPersons.ppn}" target="_blank">{place.place} {bookPersons.yearString}</f:link.external>
+            </f:then>
+            <f:else>
+                <f:link.external title="<f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_read_the_whole_book'></f:translate> {place.place} {bookStreets.yearString}!" uri="http://digital.slub-dresden.de/id{bookStreets.ppn}" target="_blank">{place.place} {bookStreets.yearString}</f:link.external>
+            </f:else>
+        </f:if>
 	</h3>
 
 	<div class="listDivChapters">
@@ -27,13 +27,10 @@
 			<f:if condition="{PageGenossenschaftsregister}"><f:then>
 			<li class="genossenschaftsregister"><f:link.external uri="http://digital.slub-dresden.de/id{bookPersons.ppn}/{PageGenossenschaftsregister}" target="_blank"><f:translate key="tx_slubwebaddressbooks_domain_model_book.page_genossenschaftsregister"></f:translate></f:link.external></li>
 			</f:then></f:if>
-
-
-
 		</ul>
 	</div>
 
-		<ul class="yearnav">
+    <ul class="yearnav">
 		<f:if condition="{yearFirst}=={yearCurrent}">
 			<f:then><li class="yearfirst"><span>{yearFirst}</span></li></f:then>
 			<f:else><li class="yearfirst"><f:link.action action="search" controller="Book" arguments="{year : yearFirst, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearFirst}</f:link.action></li></f:else>

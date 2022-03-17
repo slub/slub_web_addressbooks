@@ -25,10 +25,6 @@ page {
   shortcutIcon = EXT:slub_web_addressbooks/Resources/Public/Images/favicon.ico
 
   headerData {
-    10 = TEXT
-    10.data = register:addressBookTitle // field:subtitle // field:title
-    10.noTrimWrap = |<title>Historische Adressbücher: |</title>|
-
     90 = TEXT
     90.value(
         <link rel="apple-touch-icon" href="/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/touchicon.png" />
@@ -88,14 +84,6 @@ page {
 				# Einfuehrung
 				7187 = TEXT
 				7187.value = guidedSearch intro
-
-				# Karte
-				7287 = TEXT
-				7287.value = guidedSearch location
-
-				# Zeitstrahl
-				7184 = TEXT
-				7184.value = guidedSearch timeline
 
 				# Ergebnisse
 				7185 = TEXT
