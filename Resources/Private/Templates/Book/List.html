@@ -51,18 +51,20 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 <div class="list listStreets">
 <h3><f:translate key="tx_slubwebaddressbooks_domain_model_street.name"></f:translate></h3>
-<f:if condition="{LinkMap}"><f:then>
-<div class="linkmap">
-	<f:link.external uri="{LinkMap}" target="_blank">
-		<f:if condition="{LinkMapThumb}">
-			<f:then>
-				<f:format.html><img src="{LinkMapThumb}" alt="Stadtplan zum Adressbuch {place.place} {bookPersons.yearString}"></f:format.html>
-			</f:then>
-			<f:else>Stadtplan zum Adressbuch {place.place} {bookPersons.yearString}</f:else>
-		</f:if>
-	</f:link.external>
-</div>
-</f:then></f:if>
+<f:if condition="{LinkMap}">
+    <f:then>
+        <div class="linkmap">
+            <f:link.external uri="{LinkMap}" target="_blank">
+                <f:if condition="{LinkMapThumb}">
+                    <f:then>
+                        <f:format.html><img src="{LinkMapThumb}" alt="Stadtplan zum Adressbuch {place.place} {bookPersons.yearString}"></f:format.html>
+                    </f:then>
+                    <f:else>Stadtplan zum Adressbuch {place.place} {bookPersons.yearString}</f:else>
+                </f:if>
+            </f:link.external>
+        </div>
+    </f:then>
+</f:if>
 <p class="listIntro"><f:translate key='tx_slubwebaddressbooks_domain_model_book.hint_list_of_street_names'></f:translate></p>
 <f:if condition="{streets}">
     <ul>
@@ -71,10 +73,11 @@ Otherwise your changes will be overwritten the next time you save the extension 
                 <f:if condition="{iterator.isFirst}">
                     <f:if condition="{str.image}">
                             <f:then>
-                                <li><f:link.external uri="https://digital.slub-dresden.de/id{bookStreets.ppn}/{str.image}" target="_blank">{str.name}</f:link.external>
-                                <f:if condition="<f:count subject='{streets}' /> > 1"><f:then>
-                                <f:link.external class="dfLink" uri="http://www.deutschefotothek.de/db/apsisa.dll/ete?action=queryGallery&index=freitext&desc={place.place}+{str.name}" target="_blank"><span class="hoverFeedback">...passende Bilder in der Deutschen Fotothek anzeigen</span></f:link.external>
-                                </f:then></f:if>
+                                <li>
+                                    <f:link.external uri="https://digital.slub-dresden.de/id{bookStreets.ppn}/{str.image}" target="_blank">{str.name}</f:link.external>
+                                    <f:if condition="<f:count subject='{streets}' /> > 1"><f:then>
+                                        <f:link.external class="dfLink" uri="http://www.deutschefotothek.de/db/apsisa.dll/ete?action=queryGallery&index=freitext&desc={place.place}+{str.name}" target="_blank"><span class="hoverFeedback">...passende Bilder in der Deutschen Fotothek anzeigen</span></f:link.external>
+                                    </f:then></f:if>
                                 </li>
                             </f:then>
                             <f:else>

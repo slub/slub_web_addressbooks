@@ -16,47 +16,49 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <section class="searchBar">
 	<f:form name="bookSearch" action="search" pageUid="{settings.pidSearchPersons}" controller="Book" method="post" noCache="1" noCacheHash="1">
 
-	<div class="formLocation">
-		<label for="placeId"><f:translate key="tx_slubwebaddressbooks_domain_model_place.place"></f:translate></label>
-		<f:form.select id="placeId" name="placeId" property="placeId" value="{selectedPlaceId}" options="{places}" optionLabelField="Place" optionValueField="uid" />
-	</div>
-	<div class="formTime">
-		<label for="year"><f:translate key="tx_slubwebaddressbooks_domain_model_book.year"></f:translate></label>
-		<div id="placeAjax">
-			<select id="year" name="tx_slubwebaddressbooks_booksearch[bookSearch][year]">
-				<f:groupedFor each="{years}" as="allDistinctYears" groupBy="year">
-					<f:for each="{allDistinctYears}" as="syear" key="label" iteration="iterator">
-						<f:if condition="{iterator.isFirst}"><f:then>
-							<f:if condition="{syear.year}"><f:then>
-								<f:if condition="{selectedYear}=={syear.year}">
-									<f:then><option value="{syear.year}" selected="selected">{syear.yearString}</option></f:then>
-									<f:else><option value="{syear.year}">{syear.yearString}</option></f:else>
-								</f:if>
-								</f:then></f:if>
-							</f:then></f:if>
-					</f:for>
-				</f:groupedFor>
-			</select>
-		</div>
-	</div>
+        <div class="formLocation">
+            <label for="placeId"><f:translate key="tx_slubwebaddressbooks_domain_model_place.place"></f:translate></label>
+            <f:form.select id="placeId" name="placeId" property="placeId" value="{selectedPlaceId}" options="{places}" optionLabelField="Place" optionValueField="uid" />
+        </div>
+        <div class="formTime">
+            <label for="year"><f:translate key="tx_slubwebaddressbooks_domain_model_book.year"></f:translate></label>
+            <div id="placeAjax">
+                <select id="year" name="tx_slubwebaddressbooks_booksearch[bookSearch][year]">
+                    <f:groupedFor each="{years}" as="allDistinctYears" groupBy="year">
+                        <f:for each="{allDistinctYears}" as="syear" key="label" iteration="iterator">
+                            <f:if condition="{iterator.isFirst}">
+                                <f:then>
+                                    <f:if condition="{syear.year}">
+                                        <f:then>
+                                            <f:if condition="{selectedYear}=={syear.year}">
+                                                <f:then><option value="{syear.year}" selected="selected">{syear.yearString}</option></f:then>
+                                                <f:else><option value="{syear.year}">{syear.yearString}</option></f:else>
+                                            </f:if>
+                                        </f:then>
+                                    </f:if>
+                                </f:then>
+                            </f:if>
+                        </f:for>
+                    </f:groupedFor>
+                </select>
+            </div>
+        </div>
 
-	<div class="formSearch">
-		<label for="SearchString"><f:translate key="tx_slubwebaddressbooks_domain_model_person.name"></f:translate></label>
-		<f:if condition="{searchName}">
-		<f:then>
-			<f:form.textfield id="SearchString" name="SearchString" property="SearchString" value="{searchName}" />
-		</f:then>
-		<f:else>
-		<f:then>
-			<f:form.textfield id="SearchString" name="SearchString" property="SearchString" value="<f:translate key='tx_slubwebaddressbooks_domain_model_book.search_field_label'></f:translate>" />
-		</f:then>
-		</f:else>
-		</f:if>
-	</div>
+        <div class="formSearch">
+            <label for="SearchString"><f:translate key="tx_slubwebaddressbooks_domain_model_person.name"></f:translate></label>
+            <f:if condition="{searchName}">
+                <f:then>
+                    <f:form.textfield id="SearchString" name="SearchString" property="SearchString" value="{searchName}" />
+                </f:then>
+                <f:else>
+                    <f:form.textfield id="SearchString" name="SearchString" property="SearchString" value="<f:translate key='tx_slubwebaddressbooks_domain_model_book.search_field_label'></f:translate>" />
+                </f:else>
+            </f:if>
+        </div>
 
-	<div class="formSubmit">
-				<f:form.submit value="<f:translate key=\"tx_slubwebaddressbooks_domain_model_person.submit\" />" />
-	</div>
+        <div class="formSubmit">
+            <f:form.submit value="<f:translate key='tx_slubwebaddressbooks_domain_model_person.submit' />" />
+        </div>
 	</f:form>
 
 	<code>
@@ -125,13 +127,10 @@ Otherwise your changes will be overwritten the next time you save the extension 
 					});
 				});
 
-
 				function log( message ) {
-							$( "<div/>" ).text( message ).prependTo( "#log" );
-							$( "#log" ).scrollTop( 0 );
+                    $( "<div/>" ).text( message ).prependTo( "#log" );
+                    $( "#log" ).scrollTop( 0 );
 				}
-
-
 			})(jQuery);
 		</script>
 	</code>
