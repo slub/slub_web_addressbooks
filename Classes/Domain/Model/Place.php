@@ -81,7 +81,13 @@ class Place extends AbstractEntity
 	 */
 	protected $tstamp;
 
-	/**
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Slub\SlubWebAddressbooks\Domain\Model\Book>
+     * @Extbase\ORM\Lazy
+     */
+    protected $books = null;
+
+    /**
 	 * Returns tstamp timestamp
 	 *
 	 * @return \DateTime

@@ -32,7 +32,9 @@ page {
   }
 
   includeCSS {
-    openlayers = EXT:slub_web_addressbooks/Resources/Public/Js/OpenLayers/ol.css
+    leaflet = EXT:slub_web_addressbooks/Resources/Public/Js/Leaflet/Core/leaflet.css
+    leaflet-markercluster-default = EXT:slub_web_addressbooks/Resources/Public/Js/Leaflet/leaflet-markercluster/MarkerCluster.Default.css
+    leaflet-markercluster = EXT:slub_web_addressbooks/Resources/Public/Js/Leaflet/leaflet-markercluster/MarkerCluster.css
     style = EXT:slub_web_addressbooks/Resources/Public/Css/style.css
   }
 
@@ -45,7 +47,8 @@ page {
   includeJSLibs {
       jQuery = EXT:slub_web_addressbooks/Resources/Public/Js/jquery-3.6.0.min.js
       jQuery.forceOnTop = 1
-      openlayers = EXT:slub_web_addressbooks/Resources/Public/Js/OpenLayers/ol.js
+      leaflet = EXT:slub_web_addressbooks/Resources/Public/Js/Leaflet/Core/leaflet.js
+      leaflet-markercluster = EXT:slub_web_addressbooks/Resources/Public/Js/Leaflet/leaflet-markercluster/leaflet.markercluster.js
   }
 
   10 = FLUIDTEMPLATE
