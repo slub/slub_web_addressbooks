@@ -14,7 +14,7 @@ return array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'year_string,year,ppn,page_behoerdenverzeichnis,page_berufsklassen_und_gewerbe,page_handelsregister,page_genossenschaftsregister,link_map,link_map_thumb,order_umlaute,order_i_j,place_id,',
-		'iconfile' => 'EXT:slub_web_addressbooks/Resources/Public/Icons/tx_slubwebaddressbooks_domain_model_book.gif'
+		'iconfile' => 'EXT:slub_web_addressbooks/Resources/Public/Icons/tx_slubwebaddressbooks_domain_model_book.png'
 	),
 	'interface' => array(
 		'showRecordFieldList' => 'hidden, year_string, year, ppn, persons, streets, page_behoerdenverzeichnis, page_berufsklassen_und_gewerbe, page_handelsregister, page_genossenschaftsregister, link_map, link_map_thumb, order_umlaute, order_i_j, place_id',

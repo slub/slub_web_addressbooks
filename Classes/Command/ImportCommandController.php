@@ -266,6 +266,7 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
             $bookObj->setYearString($sheetName);
             $bookObj->setYear($year);
             $bookObj->setPlaceId($placeObj);
+            $placeObj->addBook($bookObj);
 
             $orderUmlaute = $bookObj->getOrderUmlaute();
             $orderUmlaute[$type] = (string)$currentSheet->getCell('E2');

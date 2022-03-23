@@ -13,13 +13,13 @@ return array(
 			'endtime' => 'endtime',
 		),
 		'searchFields' => 'place,lat,lon,hov_link,gndid,',
-		'iconfile' => 'EXT:slub_web_addressbooks/Resources/Public/Icons/tx_slubwebaddressbooks_domain_model_place.gif'
+		'iconfile' => 'EXT:slub_web_addressbooks/Resources/Public/Icons/tx_slubwebaddressbooks_domain_model_place.png'
 	),
 	'interface' => array(
-		'showRecordFieldList' => 'hidden, place, lat, lon, hov_link, gndid',
+		'showRecordFieldList' => 'hidden, place, lat, lon, hov_link, gndid, books',
 	),
 	'types' => array(
-		'1' => array('showitem' => 'hidden, place, lat, lon, hov_link, gndid,--div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
+		'1' => array('showitem' => 'hidden, place, lat, lon, hov_link, gndid, books, --div--;LLL:EXT:cms/locallang_ttc.xlf:tabs.access,starttime, endtime'),
 	),
 	'palettes' => array(
 		'1' => array('showitem' => ''),
@@ -34,12 +34,14 @@ return array(
                 'default' => 0,
             ],
         ],
-		'tstamp' => [
-		  'label' => 'tstamp',
-		  'config' => [
-		   'type' => 'passthrough',
-		  ]
-		],
+        'tstamp' => [
+            'label' => 'LLL:EXT:core/Resources/Private/Language/locallang_general.xlf:LGL.timestamp',
+            'config' => [
+                'type' => 'input',
+                'renderType' => 'inputDateTime',
+                'eval' => 'datetime',
+            ]
+        ],
         'starttime'                => [
             'exclude'   => 1,
             'l10n_mode' => 'exclude',
@@ -115,5 +117,22 @@ return array(
 				'eval' => 'trim'
 			),
 		),
+        'books' => [
+            'exclude' => 1,
+            'label' => 'LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang_db.xlf:tx_slubwebaddressbooks_domain_model_book',
+            'config' => [
+                'type' => 'select',
+                'renderType' => 'selectMultipleSideBySide',
+                'foreign_table' => 'tx_slubwebaddressbooks_domain_model_book',
+                'foreign_table_where' => 'AND tx_slubwebaddressbooks_domain_model_book.pid=###CURRENT_PID### ORDER BY tx_slubwebaddressbooks_domain_model_book.year_string',
+                'MM' => 'tx_slubwebaddressbooks_place_book_mm',
+                'size' => 5,
+                'autoSizeMax' => 15,
+                'minitems' => 0,
+                'maxitems' => 1024,
+                'default' => 0,
+            ],
+        ],
+
 	),
 );

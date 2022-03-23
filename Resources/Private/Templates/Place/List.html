@@ -26,7 +26,13 @@ Otherwise your changes will be overwritten the next time you save the extension 
     var addressPoints = [];
 
     <f:for each="{places}" iteration="id" as="place">
-        addressPoints[{id.index}] = ["{place.place}", {place.lat}, {place.lon}, "<f:uri.action pageUid="{settings.pidTimeline}" controller="Book" action="timeline" arguments="{placeId: place.uid}" />" ];
+        addressPoints[{id.index}] = [
+            "{place.place}",
+            {place.lat},
+            {place.lon},
+            "<f:uri.action pageUid="{settings.pidTimeline}" controller="Book" action="timeline" arguments="{placeId: place.uid}" />",
+            [<f:for each="{place.books}" as="book" iteration="it">"<f:format.htmlspecialchars><f:link.action pageUid="{settings.pidSearchPersons}" controller="Book" action="list" arguments="{year: book.year, placeId: place.uid}">{book.year}</f:link.action></f:format.htmlspecialchars>"{f:if(condition:"!{it.isLast}", then: ',')}</f:for>]
+        ];
     </f:for>
 
     console.log(addressPoints);
@@ -43,9 +49,32 @@ Otherwise your changes will be overwritten the next time you save the extension 
         var n=a[1];
         var uri=a[3];
         var gcon =  L.icon({iconUrl: '/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/marker.png', iconSize: [40,40]});
-        var title = a[4];
+        var books = a[4];
+        var bookString = 'Vorhandene Ausgaben: ';
+        books.forEach((book, index) => {
+            if (book.length > 0) {
+                bookString += decodeHtml(book) + ' ';
+            }
+        });
+
+        // decode htmlspecialchars in JavaScript
+        function decodeHtml(str)
+        {
+            var map =
+            {
+                '&amp;': '&',
+                '&lt;': '<',
+                '&gt;': '>',
+                '&quot;': '"',
+                '&#039;': "'"
+            };
+            return str.replace(/&amp;|&lt;|&gt;|&quot;|&#039;/g, function(m) {return map[m];});
+        }
+
+
         var marker = L.marker(new L.LatLng(a[1], a[2]),{ icon: gcon });
-        marker.bindPopup('<h2><a href="' + uri + '">' + label + '</a></h2><br>'+'<a href="' + uri + '">' + label + '</a>');
+        console.log(bookString);
+        marker.bindPopup('<h2><a href="' + uri + '">' + label + '</a></h2><br>' + bookString);
         markers.addLayer(marker);
     }
 
@@ -68,7 +97,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
                 return layer.feature.properties.description;
             }).addTo(map);
         }
-        }).error(function() {});
+        }).fail(function() {});
 
 </script>
 

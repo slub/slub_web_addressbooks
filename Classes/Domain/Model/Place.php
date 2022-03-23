@@ -27,6 +27,9 @@ namespace Slub\SlubWebAddressbooks\Domain\Model;
 
 use TYPO3\CMS\Extbase\Annotation as Extbase;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\Generic\LazyLoadingProxy;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use Slub\SlubWebAddressbooks\Domain\Model\Book;
 
 /**
  *
@@ -86,6 +89,21 @@ class Place extends AbstractEntity
      * @Extbase\ORM\Lazy
      */
     protected $books = null;
+
+    /**
+     * constructor
+     */
+    public function __construct()
+    {
+        // Do not remove the next line: It would break the functionality
+        $this->initStorageObjects();
+    }
+
+    protected function initStorageObjects()
+    {
+        $this->books = new ObjectStorage();
+    }
+
 
     /**
 	 * Returns tstamp timestamp
@@ -210,5 +228,45 @@ class Place extends AbstractEntity
     {
 		$this->gndid = $gndid;
 	}
+
+    /**
+     * Returns the books
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Slub\SlubWebAddressbooks\Domain\Model\Book> $collections
+     */
+    public function getBooks()
+    {
+        return $this->books;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Slub\SlubWebAddressbooks\Domain\Model\Book> $collections
+     */
+    public function setBooks(?ObjectStorage $books): void
+    {
+        $this->books = $books;
+    }
+
+    /**
+     * Adds a book
+     *
+     * @param \Slub\SlubWebAddressbooks\Domain\Model\Book $book
+     */
+    public function addBook(Book $book): void
+    {
+        $this->books->attach($book);
+    }
+
+    /**
+     * Removes a book
+     *
+     * @param \Slub\SlubWebAddressbooks\Domain\Model\Book $collection
+     *
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage<\Slub\SlubWebAddressbooks\Domain\Model\Book> books
+     */
+    public function removeBook(Book $book)
+    {
+        $this->books->detach($book);
+    }
 
 }
