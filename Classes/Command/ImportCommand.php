@@ -63,11 +63,31 @@ use Symfony\Component\Console\Command\Command;
 	protected $placeRepository;
 
     /**
+	 * @var boolean
+	 */
+	protected $dryRun;
+
+    /**
+	 * @var boolean
+	 */
+	protected $force;
+
+    /**
 	 * location URL of the METS file
 	 *
 	 * @var string
 	 */
 	protected $location;
+
+    /**
+     * @var int
+     */
+    protected $storagePid;
+
+    /**
+     * @var Symfony\Component\Console\Style\SymfonyStyle
+     */
+    protected $io;
 
     /**
 	 * Extbase objectManager
@@ -97,6 +117,12 @@ use Symfony\Component\Console\Command\Command;
                 'p',
                 InputOption::VALUE_REQUIRED,
                 'StoragePid of the indexed books.'
+            )
+            ->addOption(
+                'force',
+                'f',
+                InputOption::VALUE_NONE,
+                'Force indexing.'
             );
     }
 
@@ -141,19 +167,22 @@ use Symfony\Component\Console\Command\Command;
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $dryRun = $input->getOption('dry-run') != false ? true : false;
+        $this->dryRun = $input->getOption('dry-run') != false ? true : false;
+        $this->force = $input->getOption('force') != false ? true : false;
 
-        $io = new SymfonyStyle($input, $output);
-        $io->title($this->getDescription());
+        $this->io = new SymfonyStyle($input, $output);
+        $this->io->title($this->getDescription());
 
         $this->initializeRepositories($input->getOption('pid'));
 
         if ($this->storagePid == 0) {
-            $io->error('ERROR: No valid PID (' . $this->storagePid . ') given.');
+            $this->io->error('ERROR: No valid PID (' . $this->storagePid . ') given.');
             exit(1);
         }
 
         $this->importAddressbooks();
+
+        return 0;
     }
 
     /**
@@ -167,24 +196,21 @@ use Symfony\Component\Console\Command\Command;
         $files = $this->getFiles();
 
         foreach ($files as $file) {
-
-        $filename = $file->getName();
-        if (stripos($filename, 'person') > 0) {
-
-            $this->importSingleBook($file, 'person', $file->getProperty('modification_date'));
-
-        } else if (stripos($filename, 'strassen') > 0 || stripos($filename, 'straßen') > 0 ) {
-
-            $this->importSingleBook($file, 'street', $file->getProperty('modification_date'));
-
+            $filename = $file->getName();
+            if (stripos($filename, 'person') > 0) {
+                if ($this->dryRun) {
+                    $this->io->section('DRY RUN: Would index ' . $filename . ' (Persons) on PID ' . $this->storagePid . '.');
+                } else {
+                    $this->importSingleBook($file, 'person', $file->getProperty('modification_date'));
+                }
+            } else if (stripos($filename, 'strassen') > 0 || stripos($filename, 'straßen') > 0 ) {
+                if ($this->dryRun) {
+                    $this->io->section('DRY RUN: Would index ' . $filename . ' (Streets) on PID ' . $this->storagePid . '.');
+                } else {
+                    $this->importSingleBook($file, 'street', $file->getProperty('modification_date'));
+                }
+            }
         }
-
-        echo "\n";
-
-        }
-
-        echo "All Done :-)\n";
-
     }
 
     /**
@@ -226,21 +252,27 @@ use Symfony\Component\Console\Command\Command;
             if (!$placeObj) {
                 $placeObj = $this->objectManager->get(\Slub\SlubWebAddressbooks\Domain\Model\Place::class);
                 $placeObj->setPlace($townName);
-                echo "NEW: " . $townName . '(' . $timestamp . ')' . "\n";
+                if ($this->io->isVerbose()) {
+                    $this->io->section('NEW: ' . $townName . '(' . $timestamp . ')');
+                }
             } else {
                 if (is_object($placeObj->getTstamp())) {
                     $timestampPlace = $placeObj->getTstamp()->getTimestamp();
                 } else {
                     $timestampPlace = 0;
                 }
-                if ($timestampPlace > $timestamp) {
-                    echo "SKIP " . $townName . ' as File is already indexed (' . $timestampPlace . '>' . $timestamp . ')' . "\n";
+                if ($timestampPlace > $timestamp && $this->force === false) {
+                    if ($this->io->isVerbose()) {
+                        $this->io->section('SKIP ' . $townName . ' as File is already indexed (' . $timestampPlace . '>' . $timestamp . ')');
+                    }
                     return;
                 } else {
                     // update activity
                     $update = true;
                     $placeObj->setTstamp(time());
-                    echo "UPDATE " . $townName . ' (' . $timestampPlace . '<' . $timestamp . ')' . "\n";
+                    if ($this->io->isVerbose()) {
+                        $this->io->section('UPDATE ' . $townName . ' (' . $timestampPlace . '<' . $timestamp . ')');
+                    }
                 }
             }
             $placeObj->setGndid((string)$currentSheet->getCell('B3'));
@@ -252,26 +284,30 @@ use Symfony\Component\Console\Command\Command;
 
             if ($update) {
                 $this->placeRepository->update($placeObj);
+                if ($this->io->isVerbose()) {
+                    $this->io->section('Updating place ' . $placeObj->getPlace() . '.');
+                }
             } else {
                 $this->placeRepository->add($placeObj);
+                if ($this->io->isVerbose()) {
+                    $this->io->section('Add place ' . $placeObj->getPlace() . '.');
+                }
             }
 
             $this->doPersistAll();
-
-            echo $townName . ' (' . $type . ') ';
 
           } else {
 
             $update = false;
 
+            // reset on every loop
+            $bookObj = null;
             $bookPpn = (string)$currentSheet->getCell('D2');
 
             // sometimes the PPN is missing - without it, we can't do anything
             if (!$placeObj || empty($bookPpn)) {
-                echo $absFileName . ': ABORT! (' . $sheetName . ')';
+                $this->io->warning($absFileName . ': ABORT! (' . $sheetName . ') - no valid PPN given.');
                 continue;
-            } else {
-                  echo $sheetName . ', ';
             }
 
             if (strpos($sheetName, '-') === FALSE) {
@@ -285,6 +321,12 @@ use Symfony\Component\Console\Command\Command;
             if (!$bookObj) {
                 $bookObj = $this->objectManager->get(\Slub\SlubWebAddressbooks\Domain\Model\Book::class);
                 $bookObj->setPpn($bookPpn);
+                if ($this->io->isVerbose()) {
+                    $this->io->section('Create new Book object for PPN ' . $bookPpn . '.');
+                }
+                // set default values
+                $bookObj->setPersons([]);
+                $bookObj->setStreets([]);
             } else {
                 // update activity
                 $update = true;
@@ -293,7 +335,6 @@ use Symfony\Component\Console\Command\Command;
             $bookObj->setYearString($sheetName);
             $bookObj->setYear($year);
             $bookObj->setPlaceId($placeObj);
-            $placeObj->addBook($bookObj);
 
             $orderUmlaute = $bookObj->getOrderUmlaute();
             $orderUmlaute[$type] = (string)$currentSheet->getCell('E2');
@@ -346,7 +387,7 @@ use Symfony\Component\Console\Command\Command;
             } else {
 
                 unset($bookObj);
-                echo $sheetName . " (nicht verfügbar), ";
+                $this->io->warning($sheetName . ' nicht verfügbar. https://digital.slub-dresden.de/id' . $bookPpn);
 
                 continue;
             }
@@ -404,23 +445,22 @@ use Symfony\Component\Console\Command\Command;
             }
 
             if ($update) {
-              $this->bookRepository->update($bookObj);
+                if ($this->io->isVerbose()) {
+                    $this->io->section('Updating ' . $placeObj->getPlace() . ' ' . $type . ' ' . $bookObj->getYear() . '.');
+                }
+                $this->bookRepository->update($bookObj);
             } else {
-                if (empty($bookObj->getStreets())) {
-                    // make sure, value is not empty
-                    $bookObj->setStreets('');
+                $this->bookRepository->add($bookObj);
+                    if ($this->io->isVerbose()) {
+                    $this->io->section('Add ' . $placeObj->getPlace() . ' ' . $type . ' ' . $bookObj->getYear() . '.');
                 }
-                if (empty($bookObj->getPersons())) {
-                    // make sure, value is not empty
-                    $bookObj->setPersons('');
-                }
-              $this->bookRepository->add($bookObj);
             }
 
+            $placeObj->addBook($bookObj);
+
+            $this->doPersistAll();
           }
-
         }
-
     }
 
     /**

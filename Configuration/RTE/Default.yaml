@@ -8,9 +8,7 @@ editor:
         contentsCss: "EXT:slub_web_addressbooks/Resources/Public/Css/style.css"
 
         stylesSet:
-            - { name: "Button Link", element: "a", attributes: { class: "btn" } }
-            - { name: "Quote Author", element: "p", attributes: { class: "quote-author" } }
-            - { name: "Start Guide Link", element: "p", attributes: { class: "startGuidedSearch" } }
+            - { name: "Start Guide Link", element: "a", attributes: { class: "startGuidedSearch" } }
 
         toolbarGroups:
             - { name: styles, groups: [ format, styles ] }
