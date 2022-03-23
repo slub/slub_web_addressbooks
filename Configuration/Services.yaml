@@ -1,0 +1,13 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Slub\SlubWebAddressbooks\:
+    resource: '../Classes/*'
+
+  Slub\SlubWebAddressbooks\Command\ImportCommand:
+    tags:
+      - name: 'console.command'
+        command: 'slubwebaddressbooks:import'
