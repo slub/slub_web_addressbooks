@@ -1,25 +1,16 @@
 <f:layout name="Default" />
 
-This Template is responsible for creating a table of domain objects.
-
-If you modify this template, do not forget to change the overwrite settings
-in /Configuration/ExtensionBuilder/settings.yaml:
-  Resources:
-    Private:
-      Templates:
-        List.html: keep
-
-Otherwise your changes will be overwritten the next time you save the extension in the extension builder
-
 <f:section name="main">
     <div id="map" style="height:600px">
     </div>
 
-    <script>
-        var map = L.map('map').setView([51.052931, 13.344958], 8);
-	var searchLayer ;
-	L.tileLayer("https://tile-2.kartenforum.slub-dresden.de/styles/maptiler-basic-v2/<f:format.raw>{</f:format.raw>z}/<f:format.raw>{</f:format.raw>x}/<f:format.raw>{</f:format.raw>y}.png", {
-	attribution: '&copy; <a href=”http://osm.org/copyright”>OpenStreetMap</a> contributors'
+<script>
+    var map = L.map('map').setView([51.052931, 13.344958], 8);
+    map.options.minZoom = 8;
+    map.options.maxZoom = 13;
+	L.tileLayer("https://<f:format.raw>{</f:format.raw>s}.kartenforum.slub-dresden.de/styles/maptiler-basic-v2/<f:format.raw>{</f:format.raw>z}/<f:format.raw>{</f:format.raw>x}/<f:format.raw>{</f:format.raw>y}.png", {
+        subdomains: ['tile-1', 'tile-2', 'tile-3', 'tile-4'],
+	    attribution: '&copy; <a href=”http://osm.org/copyright”>OpenStreetMap</a> contributors',
 	}).addTo(map);
 
 
@@ -35,8 +26,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
         ];
     </f:for>
 
-    console.log(addressPoints);
-
     var markers = L.markerClusterGroup({
         chunkedLoading: true,
         maxClusterRadius: 60
@@ -45,7 +34,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
     for (var i = 0; i < addressPoints.length; i++) {
         var a = addressPoints[i];
         var label = a[0];
-        console.log(a);
         var n=a[1];
         var uri=a[3];
         var gcon =  L.icon({iconUrl: '/typo3conf/ext/slub_web_addressbooks/Resources/Public/Images/marker.png', iconSize: [40,40]});
@@ -73,7 +61,6 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 
         var marker = L.marker(new L.LatLng(a[1], a[2]),{ icon: gcon });
-        console.log(bookString);
         marker.bindPopup('<h2><a href="' + uri + '">' + label + '</a></h2><br>' + bookString);
         markers.addLayer(marker);
     }

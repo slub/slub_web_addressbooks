@@ -4,7 +4,7 @@
 plugin.tx_slubwebaddressbooks.settings.opengraph.locale = de_DE
 plugin.tx_slubwebaddressbooks.settings.opengraph.site_name = Historische Adressbücher von Sachsen
 
-[globalVar = GP:L=1]
+[siteLanguage("languageId") == "1"]
 plugin.tx_slubwebaddressbooks.settings.opengraph.locale = en_GB
 plugin.tx_slubwebaddressbooks.settings.opengraph.site_name = Historical Adressbooks from Saxony
 [global]

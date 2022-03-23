@@ -1,8 +1,6 @@
 page = PAGE
 page {
 
-  bodyTag = <body class="home">
-
   1 = LOAD_REGISTER
   1 {
     pageDescription {
@@ -53,9 +51,26 @@ page {
 
   10 = FLUIDTEMPLATE
 	10 {
-	  file = EXT:slub_web_addressbooks/Resources/Private/Templates/Content.html
-	  layoutRootPath = EXT:slub_web_addressbooks/Resources/Private/Layouts/
-	  partialRootPath = EXT:slub_web_addressbooks/Resources/Private/Partials/
+    templateName = TEXT
+    templateName {
+        cObject = TEXT
+        cObject {
+            data = pagelayout
+            required = 1
+            case = uppercamelcase
+            split {
+                token = pagets__
+                cObjNum = 1
+                1.current = 1
+            }
+        }
+
+        ifEmpty = Default
+    }
+
+	  layoutRootPaths.0 = EXT:slub_web_addressbooks/Resources/Private/Layouts/
+	  partialRootPaths.0 = EXT:slub_web_addressbooks/Resources/Private/Partials/
+	  templateRootPaths.0 = EXT:slub_web_addressbooks/Resources/Private/Templates/
 
 		variables {
       pageTitle = TEXT
@@ -89,27 +104,6 @@ page {
     }
 	}
 }
-
-[globalVar = GP:L=1]
-page.headerData.10.noTrimWrap = |<title>Historical Addressbooks: |</title>|
-[global]
-
-[globalVar = TSFE:id = {$plugin.tx_slubwebaddressbooks.rootPid}]
-page {
-	bodyTag = <body class="home">
-}
-[global]
-[PIDinRootline = {$plugin.tx_slubwebaddressbooks.rootPid}] AND [globalVar = TSFE:id != {$plugin.tx_slubwebaddressbooks.rootPid}]
-page {
-	bodyTag = <body class="subpage">
-}
-[global]
-
-[PIDinRootline = {$plugin.tx_slubwebaddressbooks.homePageId}]
-page.10 {
-  file = EXT:slub_web_addressbooks/Resources/Private/Templates/Start.html
-}
-[global]
 
 # we need this setting to place multiple plugins one one pages
 # see: https://wiki.typo3.org/Exception/CMS/1313855175
