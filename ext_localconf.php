@@ -35,3 +35,8 @@ defined('TYPO3_MODE') || die();
 	array(
 	)
 );
+
+/**
+ * Add default RTE configuration
+ */
+$GLOBALS['TYPO3_CONF_VARS']['RTE']['Presets']['slub_web_addressbooks'] = 'EXT:slub_web_addressbooks/Configuration/RTE/Default.yaml';
