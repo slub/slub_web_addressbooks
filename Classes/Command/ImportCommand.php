@@ -30,16 +30,22 @@ use TYPO3\CMS\Core\Resource\ProcessedFileRepository;
 use TYPO3\CMS\Core\Resource\File;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Core\Utility\MathUtility;
+use TYPO3\CMS\Extbase\Configuration\ConfigurationManager;
 use TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-use TYPO3\CMS\Extbase\Mvc\Controller\CommandController;
+use TYPO3\CMS\Extbase\Object\ObjectManager;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use Slub\SlubWebAddressbooks\Domain\Repository\BookRepository;
 use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Console\Command\Command;
 
  /**
-  * ImportCommandController
+  * ImportCommand
   */
- class ImportCommandController extends CommandController
+ class ImportCommand extends Command
 {
 
 	/**
@@ -49,44 +55,12 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 	 */
 	protected $bookRepository;
 
-	/**
-     * @param \Slub\SlubWebAddressbooks\Domain\Repository\BookRepository $bookRepository
-     */
-    public function injectBookRepository(BookRepository $bookRepository)
-    {
-        $this->bookRepository = $bookRepository;
-    }
-
     /**
 	 * placeRepository
 	 *
 	 * @var \Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository
 	 */
 	protected $placeRepository;
-
-	/**
-     * @param \Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository $placeRepository
-     */
-    public function injectPlaceepository(PlaceRepository $placeRepository)
-    {
-        $this->placeRepository = $placeRepository;
-    }
-
-    /**
-     * @var ConfigurationManagerInterface
-     */
-    protected $configurationManager;
-
-    /**
-     * injectConfigurationManager
-     *
-     * @param \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface $configurationManager
-     * @return void
-     */
-    public function injectConfigurationManager(ConfigurationManagerInterface $configurationManager)
-    {
-        $this->configurationManager = $configurationManager;
-    }
 
     /**
 	 * location URL of the METS file
@@ -96,46 +70,99 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 	protected $location;
 
     /**
-     * Init some settings like storagePid
-     *
-     * @param int $storagePid
+	 * Extbase objectManager
+	 *
+	 * @var TYPO3\CMS\Extbase\Object\ObjectManager
+	 */
+	protected $objectManager;
+
+    /**
+     * Configure the command by defining the name, options and arguments
      *
      * @return void
      */
-    protected function init($storagePid = -1)
+    public function configure()
     {
+        $this
+            ->setDescription('Import Historical Addressbooks from Excel')
+            ->setHelp('')
+            ->addOption(
+                'dry-run',
+                null,
+                InputOption::VALUE_NONE,
+                'If this option is set, the files will not actually be processed.'
+            )
+            ->addOption(
+                'pid',
+                'p',
+                InputOption::VALUE_REQUIRED,
+                'StoragePid of the indexed books.'
+            );
+    }
 
-       // if there is no storagePid as CLI parameter, take it from extension configuration
-       if (!MathUtility::canBeInterpretedAsInteger($storagePid) || ($storagePid < 0) ) {
+    /**
+     * Initialize the extbase repository based on the given storagePid.
+     *
+     * TYPO3 10+: Find a better solution e.g. based on Symfonie Dependancy Injection.
+     *
+     * @param int $storagePid The storage pid
+     *
+     * @return bool
+     */
+    protected function initializeRepositories($storagePid)
+    {
+        if (MathUtility::canBeInterpretedAsInteger($storagePid)) {
+            $configurationManager = GeneralUtility::makeInstance(ConfigurationManager::class);
+            $frameworkConfiguration = $configurationManager->getConfiguration(ConfigurationManagerInterface::CONFIGURATION_TYPE_FRAMEWORK);
 
-           // abort if no storagePid is found
-           echo 'NO valid storagePid given. Please enter the storagePid.' . $storagePid . '.' . "\n";
-           exit(1);
+            $frameworkConfiguration['persistence']['storagePid'] = MathUtility::forceIntegerInRange((int) $storagePid, 0);
+            $configurationManager->setConfiguration($frameworkConfiguration);
 
-       }
+            // TODO: When we drop support for TYPO3v9, we needn't/shouldn't use ObjectManager anymore
+            $this->objectManager = GeneralUtility::makeInstance(ObjectManager::class);
 
-       // set storagePid to point extbase to the right repositories
-       $configurationArray = [
-           'persistence' => [
-               'storagePid' => $storagePid,
-           ],
-       ];
-       $this->configurationManager->setConfiguration($configurationArray);
+            $this->placeRepository = $this->objectManager->get(PlaceRepository::class);
+            $this->bookRepository = $this->objectManager->get(BookRepository::class);
+        } else {
+            return false;
+        }
+        $this->storagePid = MathUtility::forceIntegerInRange((int) $storagePid, 0);
 
+        return true;
+    }
+
+    /**
+     * Executes the command to index the given document to db and solr.
+     *
+     * @param InputInterface $input The input parameters
+     * @param OutputInterface $output The Symfony interface for outputs on console
+     *
+     * @return int
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $dryRun = $input->getOption('dry-run') != false ? true : false;
+
+        $io = new SymfonyStyle($input, $output);
+        $io->title($this->getDescription());
+
+        $this->initializeRepositories($input->getOption('pid'));
+
+        if ($this->storagePid == 0) {
+            $io->error('ERROR: No valid PID (' . $this->storagePid . ') given.');
+            exit(1);
+        }
+
+        $this->importAddressbooks();
     }
 
     /**
      * Import all Addressbooks
      *
-     *
-     * @param int    storagePid
-     *
      * @return void
      */
-    public function importAddressbooksCommand($storagePid = -1)
+    protected function importAddressbooks()
     {
-
-        $this->init($storagePid);
 
         $files = $this->getFiles();
 
@@ -287,6 +314,10 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
 
                 // get table of contents from METS structure
                 $toc = $this->getTableOfContents($mets);
+
+                if (!is_array($toc)) {
+                    continue;
+                }
 
                 $toc = $this->normalizeToc($toc);
 
@@ -522,6 +553,8 @@ use Slub\SlubWebAddressbooks\Domain\Repository\PlaceRepository;
                 $toc[(string)$div['LABEL']] = $log2Page[(string)$div['ID']];
             }
         }
+
+        return $toc;
     }
 
 

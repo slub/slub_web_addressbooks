@@ -29,20 +29,9 @@ defined('TYPO3_MODE') || die();
 	'Slub.SlubWebAddressbooks',
 	'Placesearch',
 	array(
-		'Place' => 'list, geojson',
+		'Place' => 'list',
 	),
 	// non-cacheable actions
 	array(
 	)
 );
-
-/*
- * Backend context
- */
-if (TYPO3_MODE === 'BE') {
-
-    // include cli command controller
-    $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['extbase']['commandControllers'][] =
-        Slub\SlubWebAddressbooks\Command\ImportCommandController::class;
-
-}

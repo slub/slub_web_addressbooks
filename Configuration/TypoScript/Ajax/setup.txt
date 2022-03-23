@@ -28,36 +28,3 @@ ajaxAddressbooksPersons {
     debug = 0
   }
 }
-
-jsonAddressbooksPlace = PAGE
-jsonAddressbooksPlace {
-  typeNum = 201712291
-#  10 =< tt_content.list.20.slubwebaddressbooks_placesearch
-  10 = USER_INT
-  10 {
-    userFunc = TYPO3\CMS\Extbase\Core\Bootstrap->run
-    vendorName = Slub
-    pluginName = Placesearch
-    extensionName = SlubWebAddressbooks
-    controller = Place
-    switchableControllerActions {
-      Place {
-        1 = geojson
-      }
-    }
-    settings =< plugin.tx_slubwebaddressbooks.settings
-    settings.pidTimeline = 19
-    persistence =< plugin.tx_slubwebaddressbooks.persistence
-  }
-  config {
-    disableAllHeaderCode = 1
-#    disableCharsetHeader = 1
-    additionalHeaders {
-        10 {
-            header = Content-type:application/vnd.geo+json
-        }
-    }
-    admPanel = 0
-    debug = 0
-  }
-}

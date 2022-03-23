@@ -1,10 +1,9 @@
 <?php
-namespace Slub\SlubWebAddressbooks\Controller;
 
 /***************************************************************
  *  Copyright notice
  *
- *  (c) 2012 Alexander Bigga <typo3@slub-dresden.de>, SLUB Dresden
+ *  (c) 2022 Alexander Bigga <typo3@slub-dresden.de>, SLUB Dresden
  *
  *  All rights reserved
  *
@@ -26,23 +25,17 @@ namespace Slub\SlubWebAddressbooks\Controller;
  ***************************************************************/
 
 /**
+ * Commands to be executed by TYPO3, where the key of the array
+ * is the name of the command (to be called as the first argument after "typo3").
+ * Required parameter is the "class" of the command which needs to be a subclass
+ * of \Symfony\Component\Console\Command\Command.
  *
- *
- * @package slub_web_addressbooks
- * @license http://www.gnu.org/licenses/gpl.html GNU General Public License, version 3 or later
- *
+ * This file is deprecated in TYPO3 v10 and will be removed in TYPO3 v11.
+ * See Deprecation: #89139 - Console Commands configuration format Commands.php
+ * https://docs.typo3.org/c/typo3/cms-core/master/en-us/Changelog/10.3/Deprecation-89139-ConsoleCommandsConfigurationFormatCommandsPhp.html
  */
-class PlaceController extends AbstractController
-{
-    /**
-	 * action list
-	 * This is the map view
-	 *
-	 * @return void
-	 */
-	public function listAction()
-    {
-		$places = $this->placeRepository->findAll();
-		$this->view->assign('places', $places);
-	}
-}
+return [
+    'slubwebaddressbooks:import' => [
+        'class' => Slub\SlubWebAddressbooks\Command\ImportCommand::class
+    ],
+];
