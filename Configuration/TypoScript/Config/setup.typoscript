@@ -1,5 +1,4 @@
 config {
-  no_cache = {$config.disableCache}
 	cache_clearAtMidnight = 1
 	sendCacheHeaders = 1
 	headerComment = Ein Projekt der Sächsischen Staatsbibliothek - Landes- und Universitätsbibliothek Dresden (SLUB)
