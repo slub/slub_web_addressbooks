@@ -99,6 +99,7 @@ input:invalid, textarea:invalid { background-color: #f0dddd; }
 img { border: 0; -ms-interpolation-mode: bicubic; vertical-align: middle; }
 .primaryColumn .ce-textpic .ce-gallery { margin: 0; padding: 15px 30px; }
 .primaryColumn .ce-textpic .ce-gallery .ce-row { padding: 15px; }
+.secondaryColumn img { width: 100%; height: auto; }
 
 /* table definitions */
 table { border-collapse: collapse; border-spacing: 0; margin: 1em 0; caption-side: bottom; font-size: 12px; }
