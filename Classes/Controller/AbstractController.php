@@ -119,7 +119,7 @@ class AbstractController extends ActionController
 	protected function getParametersSafely($parameterName)
     {
 
-		if($this->request->hasArgument( $parameterName )){
+		if ($this->request->hasArgument( $parameterName )){
 			return $this->request->getArgument( $parameterName );
 		}
 		return NULL;

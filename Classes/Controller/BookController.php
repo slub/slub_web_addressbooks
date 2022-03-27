@@ -231,8 +231,7 @@ class BookController extends AbstractController
 
 			$books = $this->bookRepository->findByPlaceId($place);
 
-			// $first = $books->getFirst();
-			// $timeline[0] = $first;
+            $timeline = [];
 
 			foreach ($books as $book) {
 

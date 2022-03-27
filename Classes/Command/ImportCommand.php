@@ -311,9 +311,9 @@ use Symfony\Component\Console\Command\Command;
             }
 
             if (strpos($sheetName, '-') === FALSE) {
-                $year = (int)$sheetName;
+                $year = (int) $sheetName;
             } else {
-                $year = substr($sheetName, 0, strpos($sheetName, '-'));
+                $year = (int) substr($sheetName, 0, strpos($sheetName, '-'));
             }
 
             $bookObj = $this->bookRepository->findOneByPpnAndPlaceId($bookPpn, $placeObj);
