@@ -1,0 +1,78 @@
+base: 'https://adressbuecher.sachsendigital.de'
+baseVariants:
+  -
+    base: 'https://sdvtypo3adressbuecher.slub-dresden.de'
+    condition: 'applicationContext == "Production/Staging"'
+  -
+    base: 'https://ddev-adressbuecher.ddev.site'
+    condition: 'applicationContext == "Development"'
+languages:
+  -
+    title: Deutsch
+    enabled: true
+    base: /
+    typo3Language: de
+    locale: de_DE.UTF-8
+    iso-639-1: de
+    websiteTitle: ''
+    navigationTitle: German
+    hreflang: de-DE
+    direction: ltr
+    flag: de
+    languageId: 0
+  -
+    title: English
+    enabled: true
+    base: /en/
+    typo3Language: default
+    locale: en_US.UTF-8
+    iso-639-1: en
+    websiteTitle: ''
+    navigationTitle: English
+    hreflang: en-US
+    direction: ltr
+    fallbackType: fallback
+    fallbacks: '0'
+    flag: gb
+    languageId: 1
+rootPageId: 1
+websiteTitle: 'Historische Adressbücher von Sachsen'
+routeEnhancers:
+  SlubWebAddressbooksBookList:
+    type: Extbase
+    limitToPages:
+      - 11
+      - 12
+      - 13
+      - 14
+      - 16 # DDEV
+      - 17 # DDEV
+      - 18 # DDEV
+      - 19 # DDEV
+    extension: SlubWebAddressbooks
+    plugin: Booksearch
+    routes:
+      - routePath: '/{placeString}/{book}'
+        _controller:
+          'Book::search'
+          'Book::list'
+        _arguments:
+          placeString: placeId
+          book: year
+      - routePath: '/{placeString}/{book}'
+        _controller:
+          'Book::list'
+        _arguments:
+          placeString: placeId
+          book: year
+      - routePath: '/{placeString}'
+        _controller:
+          'Book::timeline'
+        _arguments:
+          placeString: placeId
+    defaultController: 'Book::search'
+    aspects:
+      placeString:
+        type: PersistedAliasMapper
+        tableName: tx_slubwebaddressbooks_domain_model_place
+        routeFieldName: place

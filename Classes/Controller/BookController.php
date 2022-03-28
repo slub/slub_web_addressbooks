@@ -153,7 +153,7 @@ class BookController extends AbstractController
 
 				if (empty($searchName) || $searchName == $GLOBALS['TSFE']->sL('LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang.xlf:tx_slubwebaddressbooks_domain_model_book.search_field_label')) {
 
-					$this->redirect('list', NULL, NULL, array('year' => $year, 'placeId' => $placeId));
+					$this->forward('list', NULL, NULL, array('year' => $year, 'placeId' => $placeId));
 
 				}
 
