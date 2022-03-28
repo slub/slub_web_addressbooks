@@ -136,54 +136,54 @@ class BookController extends AbstractController
 	public function searchAction()
     {
 
-				$searchParams = $this->getParametersSafely('bookSearch');
+        $searchParams = $this->getParametersSafely('bookSearch');
 
-				if (is_array($searchParams)) {
-					// get parameter from search form
-					$searchName = $searchParams['SearchString'];
-					$year = $searchParams['year'];
-					$placeId = $searchParams['placeId'];
-				} else {
-					// get parameter instead from GET variables
-					$searchName = $this->getParametersSafely('SearchString');
-					$year = $this->getParametersSafely('year');
-					$placeId = $this->getParametersSafely('placeId');
-				}
-				$searchName = trim(str_replace(',', '', $searchName));
+        if (is_array($searchParams)) {
+            // get parameter from search form
+            $searchName = $searchParams['SearchString'];
+            $year = $searchParams['year'];
+            $placeId = $searchParams['placeId'];
+        } else {
+            // get parameter instead from GET variables
+            $searchName = $this->getParametersSafely('SearchString');
+            $year = $this->getParametersSafely('year');
+            $placeId = $this->getParametersSafely('placeId');
+        }
+        $searchName = trim(str_replace(',', '', $searchName));
 
-				if (empty($searchName) || $searchName == $GLOBALS['TSFE']->sL('LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang.xlf:tx_slubwebaddressbooks_domain_model_book.search_field_label')) {
+        if (empty($searchName) || $searchName == $GLOBALS['TSFE']->sL('LLL:EXT:slub_web_addressbooks/Resources/Private/Language/locallang.xlf:tx_slubwebaddressbooks_domain_model_book.search_field_label')) {
 
-					$this->forward('list', NULL, NULL, array('year' => $year, 'placeId' => $placeId));
+            $this->forward('list', NULL, NULL, array('year' => $year, 'placeId' => $placeId));
 
-				}
+        }
 
-				$allyears = $this->bookRepository->findByPlaceId($placeId);
+        $allyears = $this->bookRepository->findByPlaceId($placeId);
 
-				$book = $this->bookRepository->findByYearAndPlace($year, $placeId)->getFirst();
+        $book = $this->bookRepository->findByYearAndPlace($year, $placeId)->getFirst();
 
-				$place = $this->placeRepository->findByUid($placeId);
+        $place = $this->placeRepository->findByUid($placeId);
 
-				if ($book) {
-					$this->view->assign('bookPersons', $book);
-					$this->view->assign('closestSearchPersons', $this->findClosestNameFast($book, $searchName, $year, $book->getOrderUmlaute()['person'], 'person'));
-					$this->view->assign('searchName', $searchName);
-					$this->view->assign('pageBehoerdenverzeichnis', $book->getPageBehoerdenverzeichnis());
-					$this->view->assign('PageBerufsklassenUndGewerbe', $book->getPageBerufsklassenUndGewerbe());
-					$this->view->assign('PageHandelsregister', $book->getPageHandelsregister());
-					$this->view->assign('PageGenossenschaftsregister', $book->getPageGenossenschaftsregister());
-					$this->view->assign('pageHovLink', $place->getHovLink());
+        if ($book) {
+            $this->view->assign('bookPersons', $book);
+            $this->view->assign('closestSearchPersons', $this->findClosestNameFast($book, $searchName, $year, $book->getOrderUmlaute()['person'], 'person'));
+            $this->view->assign('searchName', $searchName);
+            $this->view->assign('pageBehoerdenverzeichnis', $book->getPageBehoerdenverzeichnis());
+            $this->view->assign('PageBerufsklassenUndGewerbe', $book->getPageBerufsklassenUndGewerbe());
+            $this->view->assign('PageHandelsregister', $book->getPageHandelsregister());
+            $this->view->assign('PageGenossenschaftsregister', $book->getPageGenossenschaftsregister());
+            $this->view->assign('pageHovLink', $place->getHovLink());
 
-					if (isset($book->getOrderUmlaute()['street'])) {
-						$this->view->assign('bookStreets', $book);
-						$this->view->assign('closestSearchStreets', $this->findClosestNameFast($book, $searchName, $year, $book->getOrderUmlaute()['street'], 'street'));
+            if (isset($book->getOrderUmlaute()['street'])) {
+                $this->view->assign('bookStreets', $book);
+                $this->view->assign('closestSearchStreets', $this->findClosestNameFast($book, $searchName, $year, $book->getOrderUmlaute()['street'], 'street'));
 
-						$this->view->assign('searchName', $searchName);
-					}
-			}
+                $this->view->assign('searchName', $searchName);
+            }
+        }
 
-				$this->view->assign('place', $this->placeRepository->findByUid($placeId));
+        $this->view->assign('place', $this->placeRepository->findByUid($placeId));
 
-				$this->getYearNav($year, $allyears);
+        $this->getYearNav($year, $allyears);
 	}
 
 	/**
