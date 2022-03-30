@@ -19,6 +19,6 @@ TCEMAIN {
 
         # group _Users
         # group: adressbuecher
-        groupid = 56
+        groupid = 8
     }
 }
