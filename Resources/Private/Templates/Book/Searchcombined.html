@@ -18,7 +18,14 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
         <div class="formLocation">
             <label for="placeId"><f:translate key="tx_slubwebaddressbooks_domain_model_place.place"></f:translate></label>
-            <f:form.select id="placeId" name="placeId" property="placeId" value="{selectedPlaceId}" options="{places}" optionLabelField="Place" optionValueField="uid" />
+            <f:form.select
+                id="placeId"
+                name="placeId"
+                property="placeId"
+                value="{selectedPlaceId}"
+                options="{places}"
+                optionLabelField="Place"
+                optionValueField="uid" />
         </div>
         <div class="formTime">
             <label for="year"><f:translate key="tx_slubwebaddressbooks_domain_model_book.year"></f:translate></label>

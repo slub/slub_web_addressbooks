@@ -9,7 +9,7 @@ defined('TYPO3_MODE') || die();
 	),
 	// non-cacheable actions
 	array(
-		'Book' => 'search',
+		'Book' => 'search, searchcombined',
 	)
 );
 
