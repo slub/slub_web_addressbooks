@@ -14,7 +14,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 <f:section name="main">
 
 <section class="searchBar">
-	<f:form name="bookSearch" action="search" pageUid="{settings.pidSearchPersons}" controller="Book" method="post" noCache="1" noCacheHash="1">
+	<f:form name="bookSearch" action="search" pageUid="{settings.pidSearchPersons}" controller="Book" method="post">
 
         <div class="formLocation">
             <label for="placeId"><f:translate key="tx_slubwebaddressbooks_domain_model_place.place"></f:translate></label>
@@ -63,7 +63,7 @@ Otherwise your changes will be overwritten the next time you save the extension 
 
 	<code>
 		<script language="javascript">
-			ajaxUrl = "<f:format.raw><f:uri.action action='ajax' controller='Person' pageType='1298' /></f:format.raw>";
+			ajaxUrl = "<f:format.raw>{f:uri.action(action:'ajax', controller:'Person', pageType:1298)}</f:format.raw>";
 
 			(function($) {
 

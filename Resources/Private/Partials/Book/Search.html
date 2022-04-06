@@ -33,20 +33,20 @@
     <ul class="yearnav">
 		<f:if condition="{yearFirst}=={yearCurrent}">
 			<f:then><li class="yearfirst"><span>{yearFirst}</span></li></f:then>
-			<f:else><li class="yearfirst"><f:link.action action="search" controller="Book" arguments="{year : yearFirst, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearFirst}</f:link.action></li></f:else>
+			<f:else><li class="yearfirst"><f:link.action action="search" controller="Book" arguments="{year : yearFirst, placeId : place.uid, SearchString : SearchString}">{yearFirst}</f:link.action></li></f:else>
 		</f:if>
 		<f:if condition="{yearPrevious}=={yearCurrent}">
 			<f:then><li class="yearleft"><span>{yearPrevious}</span></li></f:then>
-			<f:else><li class="yearleft"><f:link.action action="search" controller="Book" arguments="{year : yearPrevious, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearPrevious}</f:link.action></li></f:else>
+			<f:else><li class="yearleft"><f:link.action action="search" controller="Book" arguments="{year : yearPrevious, placeId : place.uid, SearchString : SearchString}">{yearPrevious}</f:link.action></li></f:else>
 		</f:if>
 
 		<f:if condition="{yearNext}=={yearCurrent}">
 			<f:then><li class="yearright"><span>{yearNext}</span></li></f:then>
-			<f:else><li class="yearright"><f:link.action action="search" controller="Book" arguments="{year : yearNext, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearNext}</f:link.action></li></f:else>
+			<f:else><li class="yearright"><f:link.action action="search" controller="Book" arguments="{year : yearNext, placeId : place.uid, SearchString : SearchString}">{yearNext}</f:link.action></li></f:else>
 		</f:if>
 		<f:if condition="{yearLast}=={yearCurrent}">
 			<f:then><li class="yearlast"><span>{yearLast}</span></li></f:then>
-			<f:else><li class="yearlast"><f:link.action action="search" controller="Book" arguments="{year : yearLast, placeId : place.uid, SearchString : SearchString}" noCache="1" noCacheHash="1">{yearLast}</f:link.action></li></f:else>
+			<f:else><li class="yearlast"><f:link.action action="search" controller="Book" arguments="{year : yearLast, placeId : place.uid, SearchString : SearchString}">{yearLast}</f:link.action></li></f:else>
 		</f:if>
 	</ul>
 </div>
